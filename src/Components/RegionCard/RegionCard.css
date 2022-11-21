@@ -1,0 +1,11 @@
+.region-card-container{
+    width: 500px;
+    height: 300px;
+    margin: auto;
+
+}
+
+.card-image-bg{
+    width: 100%;
+    height: 100%;
+}
