@@ -1,0 +1,29 @@
+.login-form{
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    color:rgb(156, 155, 155)
+}
+.color{
+    color:rgb(156, 155, 155)
+}
+.form--input{
+    border: none;
+    border-bottom: 1px solid rgb(195, 195, 195);
+    margin: auto;
+    outline: none;
+    margin-bottom: 20px;
+    transition: all 0.4s ease-in-out;
+
+}
+.text-button{
+    cursor: pointer;
+}
+.text-button:hover{
+color:cadetblue;
+}
+input:focus{
+    outline: none;
+}
