@@ -21,7 +21,15 @@ export const LogInUser = createAsyncThunk(
 export const AuthSlice = createSlice({
   name: "AuthSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    resetStatus: (state) => {
+      state.status = "idle";
+    },
+    signOut: (state) => {
+      state.status = "idle";
+      state.IsLoggedIn=false;
+    },
+  },
   extraReducers: {
     [LogInUser.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
