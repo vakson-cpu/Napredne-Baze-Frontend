@@ -1,11 +1,10 @@
 import axios from "axios";
-import jwt_decode from "jwt-decode";
-const baseURL = "http://localhost:5000/api/Regions";
+const baseURL = "http://localhost:5000/api";
 
 axios.defaults.baseURL = baseURL;
 
-export  const UserService = {
+export  const RegionService = {
   GetRegions: async() =>
-    await axios.get("GetAll").then((res) =>res.data ).catch((err)=>err)
+    await axios.get("Regions/GetAll").then((res) =>res.data ).catch((err)=>err)
 
 };
