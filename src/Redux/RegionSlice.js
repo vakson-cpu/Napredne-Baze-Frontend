@@ -25,8 +25,6 @@ export const RegionSlice = createSlice({
   extraReducers: {
     [GetRegions.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
-    
-
     },
     [GetRegions.pending]: (state, action) => {
       state.status = STATUS.PENDING;
