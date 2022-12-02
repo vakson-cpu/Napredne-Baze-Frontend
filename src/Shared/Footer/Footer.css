@@ -5,6 +5,9 @@
     text-align: center;
     width: 100%;
 }
+.row{
+  --bs-gutter-x: 0rem;
+}
 .footer-clean .item.social {
     text-align:center;
   }
