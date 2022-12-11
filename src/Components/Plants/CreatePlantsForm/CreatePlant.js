@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { STATUS } from "../../../Enums/StatusEnum";
 import { Spinner } from "react-bootstrap";
 import "./CreatePlant.css";
+import { PlantSrevice } from "../../../Services/PlantService";
 
 const CreatePlant = () => {
   const filePickerRef = useRef();
@@ -18,10 +19,14 @@ const CreatePlant = () => {
   const status = useSelector((state) => state.RegionSlice.status);
   const [checkList, setCheckList] = useState([]);
   const [url, setUrl] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("imena su: ", LatinName, " ", LocalName);
+    // let response=await PlantSrevice.CreatePlant({LatinName:LatinName,LocalName:LocalName,ProtectionId:protection,Regions:checkList},file)
+    let response=await PlantSrevice.CreatePlant2({LatinName:LatinName,LocalName:LocalName,ProtectionId:protection,Regions:checkList,file:file})
+    console.log(response);
   };
+
   const handleChecked = (e) => {
     let helpArray = checkList.filter((item) => item === e.target.value);
     if (helpArray.length === 0) setCheckList([...checkList, e.target.value]);
@@ -30,6 +35,7 @@ const CreatePlant = () => {
       setCheckList([...helpArray]);
     }
   };
+
   useEffect(() => {
     if (!file) return;
     const fileReader = new FileReader();
