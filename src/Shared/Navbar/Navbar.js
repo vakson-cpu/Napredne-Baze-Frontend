@@ -2,15 +2,25 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import GolijaLogo from "../../Assets/GolijaLogo.jpg";
 import Hamburger from "hamburger-react";
-import LoginModal from '../Modals/LoginModal'
-
+import LoginModal from "../Modals/LoginModal";
 import "./Navbar.css";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../../Redux/AuthSlice";
 const Navbar = () => {
   const [openNavbar, setOpenNavbar] = useState(false);
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
+
+  const IsLogged = useSelector((state) => state.AuthSlice.IsLoggedIn);
+  const dispatch = useDispatch();
+  const handleLogin = () => {
+    if (!IsLogged) setShowModal(!showModal);
+    else {
+      dispatch(signOut());
+    }
+  };
   return (
     <>
-    <LoginModal handleShow={setShowModal} show={showModal}></LoginModal>
+      <LoginModal handleShow={setShowModal} show={showModal}></LoginModal>
       <div className="Navbar-box ">
         <div className="Navbar-Logo-box">
           <img src={GolijaLogo} alt="navigation" />
@@ -29,8 +39,8 @@ const Navbar = () => {
             <Link to={"Nekilink"}>
               <p>Plants</p>
             </Link>
-            <button className="custom-button" onClick={()=>setShowModal(!showModal)}>
-              Log-in
+            <button className="custom-button" onClick={handleLogin}>
+              {IsLogged ? "Log-Out" : "Log-in"}
             </button>
           </div>
           <div className="Navbar-ham">
@@ -53,8 +63,8 @@ const Navbar = () => {
             <p>Plants</p>
           </Link>
           <Link to={"Nekilink"}>
-              <p>Log-In</p>
-            </Link>
+            <p>Log-In</p>
+          </Link>
         </div>
       )}
     </>
