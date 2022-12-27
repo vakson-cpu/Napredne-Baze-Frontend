@@ -28,6 +28,7 @@ export const AuthSlice = createSlice({
     signOut: (state) => {
       state.status = "idle";
       state.IsLoggedIn=false;
+      localStorage.clear();
     },
   },
   extraReducers: {
@@ -47,5 +48,5 @@ export const AuthSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-
+export const { resetStatus, signOut } = AuthSlice.actions;
 export default AuthSlice.reducer;
