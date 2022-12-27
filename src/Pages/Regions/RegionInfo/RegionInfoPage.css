@@ -1,0 +1,49 @@
+.backgroundImage--Nature{
+    background-image: url('../../../Assets/NatureBackground.jpg');
+    background-size: cover;
+    height: 100%;
+
+}
+
+.overlay-box{
+    background-color: rgba(0, 0, 0, 0.587);
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 25px;
+    max-height: 800pxs;
+}
+.special-paragraph{
+    margin-top: 40px;
+
+
+}
+.widthPanel{
+    width: 100%;
+    height: 500px;
+    align-items: center;
+    /* display: flex;
+    flex-direction: row; */
+
+}
+
+.pagi-item{
+    width: 30px;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+    margin: 5px;
+    text-align: center;
+    cursor: pointer;
+    
+}
+.pagi-item.active{
+    background-color: rgb(99, 126, 207);
+}
+.pagi-item:hover{
+    background-color: rgb(220, 216, 216);
+}
+
+
+.alignButton{
+    margin: 30px;
+}
+
