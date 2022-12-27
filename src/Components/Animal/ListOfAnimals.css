@@ -1,0 +1,16 @@
+
+.pagi-item{
+    width: 30px;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+    margin: 5px;
+    text-align: center;
+    cursor: pointer;
+    
+}
+.pagi-item.active{
+    background-color: rgb(99, 126, 207);
+}
+.pagi-item:hover{
+    background-color: rgb(220, 216, 216);
+}
