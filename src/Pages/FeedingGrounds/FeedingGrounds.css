@@ -1,0 +1,5 @@
+.forest-background{
+    background-image: url('../../Assets/ForestBackground.jpeg');
+    background-size: cover;
+    padding: 100px;
+}
