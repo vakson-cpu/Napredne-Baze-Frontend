@@ -7,6 +7,7 @@ import Animal3 from "../../Assets/Animal3.jpeg";
 import Plant1 from "../../Assets/Plant1.jpeg"
 import Plant2 from "../../Assets/Plant2.jpeg"
 import Plant3 from "../../Assets/Plant3.jpeg"
+import GolijaBg from "../../Assets/GoogleMapaGolija.jpg"
 const Info = () => {
   return (
     <div>
@@ -57,7 +58,7 @@ const Info = () => {
         <h1 className="text-center">Gallery</h1>
 
         <Row>
-          <Col xs={12} md={4}>
+          <Col  xs={12} md={4}>
             <img className="Fauna-Flora-Pictures" src={Animal1} alt="Animal" />
           </Col>
           <Col xs={12} md={4}>
@@ -79,6 +80,11 @@ const Info = () => {
           </Col>
         </Row>
       </section>
+
+      <div className='mt-5 mb-5 bg-black'>
+        <h1 className="text-center mb-4">Satelite view of Golija</h1>
+        <img  src={GolijaBg}  className='alignPicture' alt="nece"   />  
+      </div>
     </div>
   );
 };
