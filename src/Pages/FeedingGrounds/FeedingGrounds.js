@@ -9,10 +9,12 @@ const FeedingGrounds = () => {
   const id = +useParams().regionId;
   const [FeedingGrounds, setFeedingGrounds] = useState([]);
   const [Loading, setLoading] = useState(true);
+  const page= parseInt(useParams().pageNumber);
+  const [currentPage, setCurrentPage] = useState(page || 1)
   useEffect(() => {
     async function getRegion() {
       setLoading(true);
-      let result = await FeedingGroundsService.GetByRegionId(id);
+      let result = await FeedingGroundsService.GetByRegionId(id,page);
       setFeedingGrounds(result.data);
       setLoading(false);
     }
@@ -36,8 +38,11 @@ const FeedingGrounds = () => {
               animals={item.animals}
             />
           ))}
-          {FeedingGrounds.length===0}
-            <h1 className="text-center text-white">Region has no feeding grounds.</h1>
+          {FeedingGrounds.length === 0 && (
+            <h1 className="text-center text-white">
+              Region has no feeding grounds.
+            </h1>
+          )}
         </div>
       </div>
     );
