@@ -1,16 +1,40 @@
+.pagi-item {
+  width: 30px;
+  height: 30px;
+  background-color: rgb(255, 255, 255);
+  margin: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+.pagi-item.active {
+  background-color: rgb(99, 126, 207);
+}
+.pagi-item:hover {
+  background-color: rgb(220, 216, 216);
+}
 
-.pagi-item{
-    width: 30px;
-    height: 30px;
-    background-color: rgb(255, 255, 255);
-    margin: 5px;
-    text-align: center;
-    cursor: pointer;
-    
+.modal-flexing {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.pagi-item.active{
-    background-color: rgb(99, 126, 207);
+
+.input-modal {
+  width: 200px;
+  outline: none;
+  border: 0px;
+  border-bottom: 1px solid rgb(123, 113, 1);
+  background-color: transparent;
+  margin-left: 10px;
+  color: wheat;
 }
-.pagi-item:hover{
-    background-color: rgb(220, 216, 216);
+
+.image-box-preview-animal {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  margin-top: 20px;
+  border: 3px solid goldenrod;
+  display: flex;
+  justify-content: center;
 }
