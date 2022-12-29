@@ -40,17 +40,25 @@ const CreatePlant = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let token;
+    if (localStorage.key("token") != undefined)
+      token = localStorage.getItem("token");
+    console.log(token);
     setLoading(true);
     let prot = handleProtections(protection);
     console.log(checkList);
     // let response=await PlantSrevice.CreatePlant({LatinName:LatinName,LocalName:LocalName,ProtectionId:protection,Regions:checkList},file)
-    let response = await PlantSrevice.CreatePlant3({
-      LatinName: LatinName,
-      LocalName: LocalName,
-      ProtectionId: prot,
-      Regions: checkList,
-      file: file,
-    }).finally((res) => setLoading(false));
+    let response = await PlantSrevice.CreatePlant(
+      {
+        LatinName: LatinName,
+        LocalName: LocalName,
+        ProtectionId: prot,
+        Regions: checkList,
+        file: file,
+      },
+      token
+    ).finally((res) => setLoading(false));
+    console.log(response);
     if (response.data === undefined) alert("Action Failed");
     if (response.data.succeeded) {
       dispatch(GetRegions());
@@ -129,7 +137,7 @@ const CreatePlant = () => {
                   />
                 </div>
                 <div className="row">
-                  <label >Local Name</label>
+                  <label>Local Name</label>
                   <input
                     type="text"
                     placeholder="LocalName"
@@ -156,7 +164,7 @@ const CreatePlant = () => {
                   })}
                 </div>
                 <div className="row mt-3">
-                  <label >Protection Level</label>
+                  <label>Protection Level</label>
                   <select
                     value={protection}
                     onChange={(e) => setProtection(e.target.value)}
