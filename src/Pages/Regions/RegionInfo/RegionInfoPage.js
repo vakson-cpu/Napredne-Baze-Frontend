@@ -105,7 +105,7 @@ const RegionInfoPage = () => {
               Plants in this region:{" "}
             </h2>
             
-            <Link to="" className="alignButton">
+            <Link to="/Plants/Create" className="alignButton">
               <Button variant="outline-warning">Add Plant</Button>
             </Link>
             <div className="d-flex flex-row flex-wrap">
@@ -142,7 +142,7 @@ const RegionInfoPage = () => {
             If you want to take a look into our feeding grounds you can follow the link.
           </p>
           <div className='d-flex justify-content-center'>
-            <Link to ={`/FeedingGrounds/${Id}`}><Button   variant='outline-danger'>Feeding Grounds...</Button></Link>
+            <Link to ={`/FeedingGrounds/${Id}/1`}><Button   variant='danger'>Feeding Grounds...</Button></Link>
             </div>
         </div>
 
