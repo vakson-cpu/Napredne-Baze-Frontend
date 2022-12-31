@@ -36,6 +36,7 @@ const FeedingGrounds = () => {
               endDate={item.endDate}
               fgnumber={item.fgNumber}
               animals={item.animals}
+              regionId={id}
             />
           ))}
           {FeedingGrounds.length === 0 && (
