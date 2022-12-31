@@ -1,6 +1,7 @@
 export const Roles = {
-  Administrator: 1,
-  Worker: 2,
-  User: 3,
+  Administrator: "Administrator",
+  Worker: "Worker",
+  User: "User",
+  Guest:"Guest"
 
 };
