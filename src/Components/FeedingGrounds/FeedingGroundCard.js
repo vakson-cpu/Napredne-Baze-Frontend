@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react'
 import { Card,Badge } from 'react-bootstrap'
 import bgImage from '../../Assets/GoogleMapaGolija.jpg'
 import { Link } from 'react-router-dom'
-const FeedingGroundCard = ({Id,startDate,endDate,fgnumber,animals}) => {
+const FeedingGroundCard = ({Id,startDate,endDate,fgnumber,animals,regionId}) => {
 
     const [isActive, setIsActive] = useState({label:"Not Active",color:"danger"})
     function dateFormat(date) {
@@ -14,7 +14,6 @@ const FeedingGroundCard = ({Id,startDate,endDate,fgnumber,animals}) => {
     }
     useEffect(() => {
         let date =dateFormat(new Date());
-        console.log("Tr",date)
         if(date>startDate && date<endDate)
             setIsActive({label:"Active",color:"success"});
     }, [])
@@ -29,7 +28,7 @@ const FeedingGroundCard = ({Id,startDate,endDate,fgnumber,animals}) => {
     <Card.Body>
       <Card.Title>Id:{fgnumber}</Card.Title>
       <Card.Text>Active in: {startDate}--{endDate}</Card.Text>
-      <Card.Text>Number of animals: <span className='text-danger'>{animals.length}</span>, <Link to={`FgId/${Id}/Animals`}>See the list</Link></Card.Text>
+      <Card.Text>Number of animals: <span className='text-danger'>{animals.length}</span>, <Link to={`/FeedingGrounds/${regionId}/FgId/${Id}/Animals`}>See the list</Link></Card.Text>
       <Badge bg={isActive.color}>{isActive.label}</Badge>
     </Card.Body>
   </Card>
