@@ -38,3 +38,12 @@
   display: flex;
   justify-content: center;
 }
+.regions-box-animal {
+  width: 200px;
+  max-height: 150px;
+  overflow-y: auto;
+  display: grid;
+  align-items: center;
+  margin: auto;
+  grid-template-columns: 100px 25px;
+}
