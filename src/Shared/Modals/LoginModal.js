@@ -27,11 +27,11 @@ export default function LoginModal({ handleShow, show }) {
       if (response.payload.succeeded) {
         let user = jwtDecode(response.payload.data);
         console.log(user);
-        // let role= Object.getOwnPropertyDescriptor(Roles,user.Role).value;
+        let role = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
         localStorage.setItem("token", response.payload.data);
         localStorage.setItem("Name", user.Name);
         localStorage.setItem("LastName", user.LastName);
-        // localStorage.setItem("Role", role);
+        localStorage.setItem("Role", role);
         localStorage.setItem("Id", user.Id);
         handleShow(false);
       }
