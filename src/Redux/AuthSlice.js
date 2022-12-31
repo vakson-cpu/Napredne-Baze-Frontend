@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { UserService } from "../Services/UserService";
 import { STATUS } from "../Enums/StatusEnum";
+import { Roles } from "../Enums/RoleEnum";
 const initialState = {
   status:STATUS.IDLE,
-  IsLoggedIn:false
+  IsLoggedIn:false,
+  Role:Roles.Guest
 
 };
 
@@ -28,8 +30,14 @@ export const AuthSlice = createSlice({
     signOut: (state) => {
       state.status = "idle";
       state.IsLoggedIn=false;
+      state.Role=Roles.Guest;
       localStorage.clear();
     },
+    signIn:(state,payload)=>{
+      state.status=STATUS.SUCCEDED;
+      state.IsLoggedIn=true;
+      state.Role=payload;
+    }
   },
   extraReducers: {
     [LogInUser.rejected]: (state, action) => {
@@ -48,5 +56,5 @@ export const AuthSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { resetStatus, signOut } = AuthSlice.actions;
+export const { resetStatus, signOut,signIn } = AuthSlice.actions;
 export default AuthSlice.reducer;
