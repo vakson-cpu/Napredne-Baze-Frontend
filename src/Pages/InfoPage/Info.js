@@ -4,10 +4,11 @@ import "./InfoPage.css";
 import Animal1 from "../../Assets/Animal1.jpeg";
 import Animal2 from "../../Assets/Animal2.jpeg";
 import Animal3 from "../../Assets/Animal3.jpeg";
-import Plant1 from "../../Assets/Plant1.jpeg"
-import Plant2 from "../../Assets/Plant2.jpeg"
-import Plant3 from "../../Assets/Plant3.jpeg"
-import GolijaBg from "../../Assets/GoogleMapaGolija.jpg"
+import Plant1 from "../../Assets/Plant1.jpeg";
+import Plant2 from "../../Assets/Plant2.jpeg";
+import Plant3 from "../../Assets/Plant3.jpeg";
+import GolijaBg from "../../Assets/GoogleMapaGolija.jpg";
+import Turizam from "../../Assets/Turizam.jpg";
 const Info = () => {
   return (
     <div>
@@ -58,7 +59,7 @@ const Info = () => {
         <h1 className="text-center">Gallery</h1>
 
         <Row>
-          <Col  xs={12} md={4}>
+          <Col xs={12} md={4}>
             <img className="Fauna-Flora-Pictures" src={Animal1} alt="Animal" />
           </Col>
           <Col xs={12} md={4}>
@@ -68,7 +69,7 @@ const Info = () => {
             <img className="Fauna-Flora-Pictures" src={Animal3} alt="Animal" />
           </Col>
         </Row>
-        <Row className='mt-4'>
+        <Row className="mt-4">
           <Col xs={12} md={4}>
             <img className="Fauna-Flora-Pictures" src={Plant1} alt="Animal" />
           </Col>
@@ -81,9 +82,31 @@ const Info = () => {
         </Row>
       </section>
 
-      <div className='mt-5 mb-5 bg-black'>
+      {/* <div className="mt-5 mb-5 ">
         <h1 className="text-center mb-4">Satelite view of Golija</h1>
-        <img  src={GolijaBg}  className='alignPicture' alt="nece"   />  
+        <img src={GolijaBg} className="alignPicture" alt="nece" />
+      </div> */}
+
+      <div>
+        <h1 className="text-center mb-4 mt-5 fw-bold">Turizam</h1>
+        <img
+          src={Turizam}
+          alt="Turizam"
+          className="alignPicture"
+          style={{ width: "80%", height: "700px" }}
+        />
+        <p className="m-5 p-5  fst-italic" style={{backgroundColor:"beige"}}>
+          Zbog svojih prostranstava ova planina je savršena i za pravu, skijašku
+          avanturu. Skijalište Odvraćenica nalazi se na impresivnoj nadmorskoj
+          visini od 1.744 m. Možete da samo zamislite kako je uzbudljiv i dobar
+          spust sa takve visine. Upravo zbog toga je ovo skijalište sve
+          popularnije i traženije. Odvraćenica okružena predivnim planinskim
+          vrhovima koji čitavu planinsku atmosferu čine još lepšom i
+          bajkovitijom. Čitavo skijalište je nalazi se izuzetno lepoj lokaciji i
+          opremljeno je dobro, modernom i savremenom opremom. Naravno,
+          skijalište će da tek napreduje kako bude napredovao i turizam ove
+          regije.
+        </p>
       </div>
     </div>
   );
