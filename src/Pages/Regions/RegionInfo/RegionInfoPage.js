@@ -8,6 +8,9 @@ import "./RegionInfoPage.css";
 import { Button, Spinner } from "react-bootstrap";
 import PlantCard from "../../../Components/Plants/PlantCardsComponents/PlantCard";
 import ListOfAnimals from "../../../Components/Animal/ListOfAnimals";
+import { Roles } from "../../../Enums/RoleEnum";
+import CreateAnimalModal from "../../../Components/Animal/CreateAnimalModal";
+import CustomToasty from "../../../Shared/Toasty/CustomToasty";
 
 const RegionInfoPage = () => {
   const Id = +useParams().regionId;
@@ -19,6 +22,12 @@ const RegionInfoPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [PagginationArray, setPagginationArray] = useState([]);
   const [toDisplayPlants, setToDisplayPlants] = useState([]);
+  const [showToasty, setshowToasty] = useState(false)
+  const [showToasty2, setShowToasty2] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const Role = useSelector((state) => state.AuthSlice.Role);
+
   useEffect(() => {
     if (STATUS.SUCCEDED === status) {
       let region = Regions.filter((region) => region.id === Id);
@@ -81,6 +90,24 @@ const RegionInfoPage = () => {
   if (STATUS.SUCCEDED === status)
     return (
       <div className="backgroundImage--Nature pt-5">
+        <CustomToasty
+          show={showToasty}
+          handleShow={setshowToasty}
+          description="Successfully Added a plant!"
+          title="Action succeeded"
+          color={"success"}
+          textColor={"text-white"}
+          position={"middle-start"}
+        />
+        <CustomToasty
+          show={showToasty2}
+          handleShow={setShowToasty2}
+          description="Error while adding a plant!"
+          title="Action failed"
+          color={"danger"}
+          textColor={"text-white"}
+          position={"middle-start"}
+        />
         <div className="overlay-box">
           <h1 className="text-center fw-bold text-white">{Region.name}</h1>
           <h2 className="text-white ">About:</h2>
@@ -104,10 +131,11 @@ const RegionInfoPage = () => {
             <h2 className="text-white text-center mt-5 mb-5 ">
               Plants in this region:{" "}
             </h2>
-            
-            <Link to="/Plants/Create" className="alignButton">
-              <Button variant="outline-warning">Add Plant</Button>
-            </Link>
+            {Role === Roles.Worker && (
+              <Link to="/Plants/Create" className="alignButton">
+                <Button variant="outline-warning">Add Plant</Button>
+              </Link>
+            )}
             <div className="d-flex flex-row flex-wrap">
               {toDisplayPlants.map((item) => (
                 <PlantCard
@@ -133,19 +161,27 @@ const RegionInfoPage = () => {
                 );
               })}
             </div>
+
+            <Button variant="outline-warning" onClick={() => setShow(true)}>
+              Add Animal
+            </Button>
+            <CreateAnimalModal show={show} onClose={setShow} setShow1={setshowToasty} setShow2={setShowToasty2} />
             {Region.animals !== undefined && (
               <ListOfAnimals Animals={Region.animals} />
             )}
           </div>
-          <p className="text-center text-white ">
-            Region is divivded in special feeding grounds where we take care of our animals.
-            If you want to take a look into our feeding grounds you can follow the link.
-          </p>
-          <div className='d-flex justify-content-center'>
-            <Link to ={`/FeedingGrounds/${Id}/1`}><Button   variant='danger'>Feeding Grounds...</Button></Link>
-            </div>
-        </div>
 
+          <p className="text-center text-white ">
+            Region is divivded in special feeding grounds where we take care of
+            our animals. If you want to take a look into our feeding grounds you
+            can follow the link.
+          </p>
+          <div className="d-flex justify-content-center">
+            <Link to={`/FeedingGrounds/${Id}/1`}>
+              <Button variant="danger">Feeding Grounds...</Button>
+            </Link>
+          </div>
+        </div>
       </div>
     );
   else
