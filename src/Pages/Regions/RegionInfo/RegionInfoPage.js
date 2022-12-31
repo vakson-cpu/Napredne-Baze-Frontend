@@ -162,7 +162,7 @@ const RegionInfoPage = () => {
               })}
             </div>
 
-            <Button variant="outline-warning" onClick={() => setShow(true)}>
+            <Button style={{marginLeft:"30px"}} variant="outline-warning" onClick={() => setShow(true)}>
               Add Animal
             </Button>
             <CreateAnimalModal show={show} onClose={setShow} setShow1={setshowToasty} setShow2={setShowToasty2} />
