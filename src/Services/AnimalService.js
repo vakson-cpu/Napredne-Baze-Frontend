@@ -25,5 +25,12 @@ export const AnimalService = {
       .catch((res) => res);
     return res;
   },
+  GetAnimalsByRegionId: async (id) => {
+    let result =axios
+      .get(`Animal/GetAnimalsByRegion/${id}`)
+      .then((res) => res.data)
+      .catch((err) => err);
+    return result;
+  },
 };
 export default AnimalService;
