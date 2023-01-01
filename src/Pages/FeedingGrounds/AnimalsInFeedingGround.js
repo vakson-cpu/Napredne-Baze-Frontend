@@ -5,15 +5,18 @@ import { useParams } from "react-router-dom";
 import AnimalTable from "../../Components/FeedingGrounds/AnimalTable";
 import AnimalsSeenChart from "./AnimalsSeenChart";
 import "./AnimalsInFeedingGrounds.css";
+import FormForAnimals from "../../Components/FeedingGrounds/FormForAnimals";
+
+
 const AnimalsInFeedingGround = () => {
   const id = useParams().id;
+  const regionId=+useParams().regionId
   const [Animals, setAnimals] = useState([]);
   const [Loading, setLoading] = useState(true);
   const [dataSet, setDataset] = useState([]);
   const [currentYear, setCurrentYear] = useState("2007-01-01");
   const [endDate, setEndDate] = useState("2008-12-30");
   const [Years, setYears] = useState([]);
-  
   const fetchFeedingGround = async (id) => {
     let result = await FeedingGroundsService.GetFeedingGroundById(id);
     console.log(result);
@@ -95,10 +98,19 @@ const AnimalsInFeedingGround = () => {
               startDate={currentYear}
               endDate={endDate}
             />
+
           </div>
+
         ) : (
           <></>
         )}
+
+      <div>
+        <h1 className="text-center text-white">Manage Animals in Feeding </h1>  
+        <div  style={{width:"600px",margin:"auto"}}> 
+        <FormForAnimals Animal={Animals} regionId={regionId} />
+        </div>
+      </div>
       </div>
     );
   else
