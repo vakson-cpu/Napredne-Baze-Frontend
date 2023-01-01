@@ -1,0 +1,27 @@
+.suggestions{
+    cursor:pointer;
+    background-color:lightcyan;
+    position: relative;
+    z-index: 1;
+
+
+}
+
+.suggestions:hover{
+    background-color: gray;
+}
+
+.parentDiv{
+    position: relative;
+    height: 350px;
+}
+
+.child{
+    position: absolute;
+    top:150px;
+}
+
+.child2{
+    position: absolute;
+    top:250px;
+}
