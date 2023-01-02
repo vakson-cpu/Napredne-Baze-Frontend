@@ -3,12 +3,13 @@ import { Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import "./FormForAnimal.css";
 import AnimalService from "../../Services/AnimalService";
-function FormForAnimals({ Animal, regionId }) {
+import FeedingGroundsService from "../../Services/FeedingGroundsService";
+function FormForAnimals({ Animals, regionId,fgid }) {
   const [LatinName, setLatinName] = useState("");
   const [date, setDate] = useState("");
   const [suggestions, setSuggestions] = useState("");
   const [allAnimals, setAllAnimals] = useState([]);
-  const [flag, setFlag] = useState(false)
+  const [flag, setFlag] = useState(false);
   const onTextChange = (tekst) => {
     let matches = [];
     setLatinName(tekst);
@@ -27,12 +28,12 @@ function FormForAnimals({ Animal, regionId }) {
   useEffect(() => {
     const fetchAnimals = async () => {
       let result = await AnimalService.GetAnimalsByRegionId(regionId);
-      console.log(result)
-      if (result.succeeded === true){
-        setFlag(false); 
-        console.log("Rezultat cekanja",result)
-        setAllAnimals(result.data);}
-      else setFlag(true);
+      console.log(result);
+      if (result.succeeded === true) {
+        setFlag(false);
+        console.log("Rezultat cekanja", result);
+        setAllAnimals(result.data);
+      } else setFlag(true);
     };
     fetchAnimals();
   }, []);
@@ -42,8 +43,33 @@ function FormForAnimals({ Animal, regionId }) {
     setSuggestions([]);
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (date > Date.now()) {
+      alert("Greska");
+      return 1;
+    } else {
+      let ifExists = Animals.filter(
+        (item) => item.animal.latinName === LatinName
+      );
+      if (ifExists.length > 0) {
+        alert("Animal is already in feedingGround");
+        return;
+      }
+      let animalToAdd = allAnimals.filter(
+        (item) => item.latinName === LatinName
+      );
+      console.log(animalToAdd)
+      let result = await FeedingGroundsService.AddAnimalToFeedingGrounds(
+        animalToAdd[0].id,
+        fgid,
+        date
+      );
+      console.log("ovo je ", result);
+    }
+  };
   return (
-    <Form className="bg-black text-white p-4 parentDiv " >
+    <Form className="bg-black text-white p-4 parentDiv ">
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Latin Name</Form.Label>
         <Form.Control
@@ -63,7 +89,7 @@ function FormForAnimals({ Animal, regionId }) {
           ))}
       </Form.Group>
       <Form.Group className="mb-3 child" controlId="formBasicPassword">
-        <Form.Label>File</Form.Label>
+        <Form.Label>First seen</Form.Label>
         <Form.Control
           value={date}
           onChange={(e) => setDate(e.target.value)}
@@ -73,7 +99,11 @@ function FormForAnimals({ Animal, regionId }) {
         />
       </Form.Group>
       <div className="text-center child2">
-        <Button variant="outline-warning"  type="submit">
+        <Button
+          onClick={(e) => onSubmit(e)}
+          variant="outline-warning"
+          type="submit"
+        >
           Submit
         </Button>
       </div>
