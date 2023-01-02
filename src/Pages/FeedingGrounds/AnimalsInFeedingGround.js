@@ -7,10 +7,9 @@ import AnimalsSeenChart from "./AnimalsSeenChart";
 import "./AnimalsInFeedingGrounds.css";
 import FormForAnimals from "../../Components/FeedingGrounds/FormForAnimals";
 
-
 const AnimalsInFeedingGround = () => {
   const id = useParams().id;
-  const regionId=+useParams().regionId
+  const regionId = +useParams().regionId;
   const [Animals, setAnimals] = useState([]);
   const [Loading, setLoading] = useState(true);
   const [dataSet, setDataset] = useState([]);
@@ -67,10 +66,10 @@ const AnimalsInFeedingGround = () => {
   if (Loading === false)
     return (
       <div className="winter-bg text-white p-2">
-          <h1 className="backround-opacity p-3 text-center ml-5 mr-5 mb-5  ">
-            Here we have insights of all animals that can be found in this
-            feeding ground number {id}
-          </h1>
+        <h1 className="backround-opacity p-3 text-center ml-5 mr-5 mb-5  ">
+          Here we have insights of all animals that can be found in this feeding
+          ground number {id}
+        </h1>
         <div className="w-75 m-auto ">
           <AnimalTable Animals={Animals} />
         </div>
@@ -98,19 +97,17 @@ const AnimalsInFeedingGround = () => {
               startDate={currentYear}
               endDate={endDate}
             />
-
           </div>
-
         ) : (
           <></>
         )}
 
-      <div>
-        <h1 className="text-center text-white">Manage Animals in Feeding </h1>  
-        <div  style={{width:"600px",margin:"auto"}}> 
-        <FormForAnimals Animal={Animals} regionId={regionId} />
+        <div>
+          <h1 className="text-center text-white">Manage Animals in Feeding </h1>
+          <div style={{ width: "600px", margin: "auto" }}>
+            <FormForAnimals Animals={Animals} fgid={id} regionId={regionId} />
+          </div>
         </div>
-      </div>
       </div>
     );
   else
