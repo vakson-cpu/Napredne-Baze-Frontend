@@ -36,7 +36,7 @@ const Navbar = () => {
             <Link to={"Nekilink"}>
               <p>Animals</p>
             </Link>
-            <Link to={"Nekilink"}>
+            <Link  to={"Plants/Get/1"}>
               <p>Plants</p>
             </Link>
             <button className="custom-button" onClick={handleLogin}>
