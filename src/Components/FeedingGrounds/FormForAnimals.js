@@ -4,12 +4,13 @@ import React, { useState, useEffect } from "react";
 import "./FormForAnimal.css";
 import AnimalService from "../../Services/AnimalService";
 import FeedingGroundsService from "../../Services/FeedingGroundsService";
-function FormForAnimals({ Animals, regionId,fgid }) {
+function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
   const [LatinName, setLatinName] = useState("");
   const [date, setDate] = useState("");
   const [suggestions, setSuggestions] = useState("");
   const [allAnimals, setAllAnimals] = useState([]);
-  const [flag, setFlag] = useState(false);
+  const [error, setErrorFlags] = useState({ flag: false, text: "" });
+  const [succes, setSucces] = useState(false)
   const onTextChange = (tekst) => {
     let matches = [];
     setLatinName(tekst);
@@ -30,10 +31,9 @@ function FormForAnimals({ Animals, regionId,fgid }) {
       let result = await AnimalService.GetAnimalsByRegionId(regionId);
       console.log(result);
       if (result.succeeded === true) {
-        setFlag(false);
         console.log("Rezultat cekanja", result);
         setAllAnimals(result.data);
-      } else setFlag(true);
+      }
     };
     fetchAnimals();
   }, []);
@@ -45,27 +45,42 @@ function FormForAnimals({ Animals, regionId,fgid }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (LatinName === "") {
+      setErrorFlags({
+        flag: true,
+        text: "LatinName must be filled",
+      });
+    }
     if (date > Date.now()) {
-      alert("Greska");
+      setErrorFlags({
+        flag: true,
+        text: "Date cant be bigger than current date.",
+      });
       return 1;
     } else {
       let ifExists = Animals.filter(
         (item) => item.animal.latinName === LatinName
       );
       if (ifExists.length > 0) {
-        alert("Animal is already in feedingGround");
+        setErrorFlags({
+          flag: true,
+          text: "Animal is already in feeding ground.",
+        });
+
         return;
       }
       let animalToAdd = allAnimals.filter(
         (item) => item.latinName === LatinName
       );
-      console.log(animalToAdd)
+      console.log(animalToAdd);
       let result = await FeedingGroundsService.AddAnimalToFeedingGrounds(
         animalToAdd[0].id,
         fgid,
         date
       );
-      console.log("ovo je ", result);
+      let newAnimals = await FeedingGroundsService.GetFeedingGroundById(fgid);
+      console.log(newAnimals);
+      setAnimal(newAnimals.data.animals);
     }
   };
   return (
@@ -97,6 +112,7 @@ function FormForAnimals({ Animals, regionId,fgid }) {
           type="date"
           placeholder="FirstSeens"
         />
+        {error.flag && <p className="text-danger mt-2">{error.text}</p>}
       </Form.Group>
       <div className="text-center child2">
         <Button
