@@ -101,11 +101,15 @@ const AnimalsInFeedingGround = () => {
         ) : (
           <></>
         )}
-
         <div>
           <h1 className="text-center text-white">Manage Animals in Feeding </h1>
           <div style={{ width: "600px", margin: "auto" }}>
-            <FormForAnimals Animals={Animals} fgid={id} regionId={regionId} />
+            <FormForAnimals
+              setAnimal={setAnimals}
+              Animals={Animals}
+              fgid={id}
+              regionId={regionId}
+            />
           </div>
         </div>
       </div>
@@ -123,5 +127,4 @@ const AnimalsInFeedingGround = () => {
       </div>
     );
 };
-
 export default AnimalsInFeedingGround;
