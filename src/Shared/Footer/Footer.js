@@ -1,14 +1,15 @@
 import React from "react";
 import "./Footer.css";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Footer = () => {
   return (
     <footer>
       <div className="footer-container">
         <div className="row justify-content-center">
           <div className=" col-sm-4 col-md-3 item">
-            <h3>Services</h3>
-            <ul className='Links'>
+            <h3 className="text-success ">Services</h3>
+            <ul className='Link'>
               <li>
                 <Link to="#">Web design</Link>
               </li>
@@ -21,8 +22,8 @@ const Footer = () => {
             </ul>
           </div>
           <div className="col-sm-4 col-md-3 item">
-            <h3>About</h3>
-            <ul className='Links'>
+            <h3 className="text-success">About</h3>
+            <ul className='Link'>
               <li>
                 <Link to="#">Company</Link>
               </li>
@@ -35,13 +36,13 @@ const Footer = () => {
             </ul>
           </div>
           <div className="col-sm-4 col-md-3 item">
-            <h3>Careers</h3>
-            <ul className='Links'>
+            <h3 className="text-success">Careers</h3>
+            <ul className='Link'>
               <li>
-                <Link to="#">Job openings</Link>
+                <Link className="Link" to="#">Job openings</Link>
               </li>
               <li>
-                <Link to="#">Employee success</Link>
+                <Link  className="Link" to="#">Employee success</Link>
               </li>
               <li>
                 <Link to="#">Benefits</Link>
@@ -50,7 +51,7 @@ const Footer = () => {
           </div>
           <div className="col-lg-3 item social">
             <Link to="#">
-              <i className="icon ion-social-facebook"></i>
+              <i className="icon ion-social-facebook "></i>
             </Link>
             <Link to="#">
               <i className="icon ion-social-twitter"></i>
@@ -59,8 +60,7 @@ const Footer = () => {
               <i className="icon ion-social-snapchat"></i>
             </Link>
             <Link to="#">
-              <i className="icon ion-social-instagram"></i>
-            </Link>
+            <FontAwesomeIcon icon="fa-brands fa-facebook-f" />                      </Link>
             <p className="copyright">Company Name © 2018</p>
           </div>
         </div>
