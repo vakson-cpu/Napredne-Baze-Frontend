@@ -11,7 +11,6 @@ import ListOfAnimals from "../../../Components/Animal/ListOfAnimals";
 import { Roles } from "../../../Enums/RoleEnum";
 import CreateAnimalModal from "../../../Components/Animal/CreateAnimalModal";
 import CustomToasty from "../../../Shared/Toasty/CustomToasty";
-
 const RegionInfoPage = () => {
   const Id = +useParams().regionId;
   console.log(Id);
@@ -182,6 +181,7 @@ const RegionInfoPage = () => {
             </Link>
           </div>
         </div>
+
       </div>
     );
   else
