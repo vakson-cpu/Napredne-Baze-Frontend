@@ -17,6 +17,7 @@ import CreateAnimalModal from "./Components/Animal/CreateAnimalModal";
 import { signIn } from "./Redux/AuthSlice";
 import NotFound from "./Pages/NotFound";
 import Plant from "./Pages/Plants/Plant";
+import Animal from "./Pages/Animals/Animal";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -48,6 +49,8 @@ const App = () => {
           element={<AnimalsInFeedingGround />}
         />
         <Route path="Plants/Get/:pageNumber" element={<Plant/>} />
+        <Route path="Animals/GetAll/:pageNumber" element={<Animal/>} />
+
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
       <Footer></Footer>
