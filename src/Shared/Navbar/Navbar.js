@@ -33,7 +33,7 @@ const Navbar = () => {
             <Link to={"Regions"}>
               <p>Regions</p>
             </Link>
-            <Link to={"Nekilink"}>
+            <Link to={"Animals/GetAll/1"}>
               <p>Animals</p>
             </Link>
             <Link  to={"Plants/Get/1"}>
