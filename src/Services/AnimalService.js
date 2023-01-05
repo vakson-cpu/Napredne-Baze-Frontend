@@ -26,8 +26,15 @@ export const AnimalService = {
     return res;
   },
   GetAnimalsByRegionId: async (id) => {
-    let result =axios
+    let result = axios
       .get(`Animal/GetAnimalsByRegion/${id}`)
+      .then((res) => res.data)
+      .catch((err) => err);
+    return result;
+  },
+  GetAllAnimals: async (pageNumber) => {
+    let result = axios
+      .get(`Animal/GetAll?pageNumber=${pageNumber}`)
       .then((res) => res.data)
       .catch((err) => err);
     return result;
