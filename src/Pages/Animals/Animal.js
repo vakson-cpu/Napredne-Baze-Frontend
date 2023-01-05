@@ -3,6 +3,7 @@ import AnimalCard from "../../Components/Animal/AnimalCard";
 import AnimalService from "../../Services/AnimalService";
 import { useParams, Link } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
+import Search from "../../Shared/Search/Search";
 const Animal = () => {
   const [List, setList] = useState([]);
   const [PagginationArray, setPagginationArray] = useState([]);
@@ -31,10 +32,13 @@ const Animal = () => {
   if (Loading === false)
     return (
       <div>
-        <h3 className="text-success text-center mt-5 mb-2 fw-bold">
+        <h1 className="text-success text-center mt-5 mb-2 fw-bold">
           All Animals Located on Golija
-        </h3>
-        
+        </h1>
+        <div className="m-auto mt-5 " style={{ width: "300px" }}>
+          {" "}
+          <Search />
+        </div>
         <div className="d-flex flex-row flex-wrap justify-content-center mt-5">
           {List.map((item) => (
             <AnimalCard
