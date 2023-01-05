@@ -29,17 +29,22 @@
 .pagi-item{
     width: 30px;
     height: 30px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(194, 209, 159) !important;
     margin: 5px;
     text-align: center;
     cursor: pointer;
-    
+    display:inline-block;
+    border:1px solid black;
+
+}
+span.pagi-item{
+    background-color: transparent;
 }
 .pagi-item.active{
-    background-color: rgb(99, 126, 207);
+    background-color: rgb(207, 178, 99);
 }
 .pagi-item:hover{
-    background-color: rgb(220, 216, 216);
+    background-color: rgb(255, 201, 201);
 }
 
 
