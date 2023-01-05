@@ -1,0 +1,40 @@
+/* Style the search input field */
+.search-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+  }
+
+  /* Style the search button */
+  .search-button {
+    width: 20%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    color: #888;
+    cursor: pointer;
+  }
+
+  /* Style the search container */
+  .search-container {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    margin: 0 auto;
+  }
+
+  /* Style the search container on smaller screens */
+  @media only screen and (max-width: 600px) {
+    .search-container {
+      width: 90%;
+    }
+  }
