@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AnimalCard from "../../Components/Animal/AnimalCard";
 import AnimalService from "../../Services/AnimalService";
 import { useParams, Link } from "react-router-dom";
-import { Spinner } from "react-bootstrap";
+import { Spinner,Button } from "react-bootstrap";
 import Search from "../../Shared/Search/Search";
 const Animal = () => {
   const [List, setList] = useState([]);
@@ -10,11 +10,13 @@ const Animal = () => {
   const page = useParams().pageNumber;
   const [currentPage, setCurrentPage] = useState(page ?? 1);
   const [Loading, setLoading] = useState(true);
-
-  const fetchAnimals = async (numberOfPage) => {
+  const [sortBy, setSortBy] = useState("")
+  const [sortValue, setsortValue] = useState("")
+  
+  const fetchAnimals = async (numberOfPage,sortBy,sortValue) => {
     setCurrentPage(numberOfPage);
     setLoading(true);
-    let result = await AnimalService.GetAllAnimals(numberOfPage);
+    let result = await AnimalService.GetAllAnimals(numberOfPage,sortBy,sortValue);
     console.log(result);
     if (result.succeeded === true) {
       setList(result.data.animals);
@@ -25,9 +27,14 @@ const Animal = () => {
       setLoading(false);
     }
   };
-
+  const handleSearch=async()=>{
+    setLoading(true)
+    let result = await AnimalService.GetAllAnimals("1",sortBy,sortValue);
+    setList(result.data.animals);
+    setLoading(false)
+  }
   useEffect(() => {
-    fetchAnimals(page);
+    fetchAnimals(page,sortBy,sortValue);
   }, [page]);
   if (Loading === false)
     return (
@@ -35,9 +42,11 @@ const Animal = () => {
         <h1 className="text-success text-center mt-5 mb-2 fw-bold">
           All Animals Located on Golija
         </h1>
-        <div className="m-auto mt-5 " style={{ width: "300px" }}>
+        <div className="m-auto mt-5 text-center" style={{ width: "300px" }}>
           {" "}
-          <Search />
+          <Search  setSort={setSortBy} setSortValue={setsortValue} sortBy={sortBy} sortValue={sortValue} />
+          <Button onClick={handleSearch} className='mt-2 m-auto text-center ' variant='success' >Search</Button>
+
         </div>
         <div className="d-flex flex-row flex-wrap justify-content-center mt-5">
           {List.map((item) => (
