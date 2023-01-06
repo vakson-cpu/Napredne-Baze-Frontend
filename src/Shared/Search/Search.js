@@ -1,42 +1,38 @@
-import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import React from "react";
+import { Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchengin } from "@fortawesome/free-brands-svg-icons";
 
-const Search = () => {
+const Search = ({setSort,setSortValue,sortBy,sortValue}) => {
     const LOCAL_NAME="LocalName";
     const LATIN_NAME="LatinName";
-    const [type, setType] = useState(LOCAL_NAME);
-    console.log(type);
-
-  const handleSearch = () => {};
+  console.log("sb ",sortBy)
   return (
     <div className="text-center">
       <div style={{ display: "flex", flexDirection: "row" }}>
         <Form.Control
+          
           style={{ width: "260px" }}
-          type="search"
-          placeholder={"Search by"}
-          value={false}
+          type="text"
+          placeholder={"Search"}
+          value={sortValue}
+          onChange={(e)=>setSortValue(e.target.value)}
         />
         <FontAwesomeIcon
-        value={true}
           style={{ cursor: "pointer" }}
-          onClick={handleSearch}
           className="text-center m-auto"
           icon={faSearchengin}
         />
       </div>
       <Form.Select
-        value={type}
-        onChange={(e) => setType(e.target.value)}
+        value={sortBy}
+        onChange={(e) => setSort(e.target.value)}
         className="mt-2"
         aria-label="Search By"
       >
         <option>{LATIN_NAME}</option>
         <option>{LOCAL_NAME}</option>
       </Form.Select>
-      <Button className='mt-2 m-auto text-center ' variant='success' >Search</Button>
     </div>
   );
 };
