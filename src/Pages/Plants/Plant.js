@@ -21,7 +21,7 @@ const Plant = () => {
     console.log(something);
     setCurrentPage(something);
     setLoading(true);
-    let result = await PlantSrevice.GetAllPlants(something);
+    let result = await PlantSrevice.GetAllPlants(something,sortBy,sortValue);
     console.log(result);
     if (result.succeeded === true) {
       setPlants(result.data.plants);
@@ -33,21 +33,20 @@ const Plant = () => {
     setLoading(false);
   };
   useEffect(() => {
-    getAll(id);
+    getAll(id,sortBy,sortValue);
   }, [id]);
 
   const handlePaginate = (item) => {
     setCurrentPage(item);
-    getAll(item);
+    getAll(item,sortBy,sortValue);
   };
 
   const handleSearch=async()=>{
     setLoading(true)
-    let result = await PlantSrevice.GetAllAnimals("1",sortBy,sortValue);
+    let result = await PlantSrevice.GetAllPlants("1",sortBy,sortValue);
     setPlants(result.data.plants);
     setLoading(false)
   }
-  console.log(plants);
   if (loading === false)
     return (
       <div className="parentWrapper">
