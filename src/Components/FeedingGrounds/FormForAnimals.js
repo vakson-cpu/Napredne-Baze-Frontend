@@ -10,7 +10,7 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
   const [suggestions, setSuggestions] = useState("");
   const [allAnimals, setAllAnimals] = useState([]);
   const [error, setErrorFlags] = useState({ flag: false, text: "" });
-  const [succes, setSucces] = useState(false)
+  const [succes, setSucces] = useState(false);
   const onTextChange = (tekst) => {
     let matches = [];
     setLatinName(tekst);
@@ -51,11 +51,20 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
         text: "LatinName must be filled",
       });
     }
+    if (date == null || date === "") {
+      console.log(date);
+      setErrorFlags({
+        flag: true,
+        text: "Date aint valid",
+      });
+      return 1
+    }
     if (date > Date.now()) {
       setErrorFlags({
         flag: true,
         text: "Date cant be bigger than current date.",
       });
+
       return 1;
     } else {
       let ifExists = Animals.filter(
@@ -73,6 +82,12 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
         (item) => item.latinName === LatinName
       );
       console.log(animalToAdd);
+      if (animalToAdd.length === 0) {
+        setErrorFlags({
+          flag: true,
+          text: "The Animal doesnt exist",
+        });
+      }
       let result = await FeedingGroundsService.AddAnimalToFeedingGrounds(
         animalToAdd[0].id,
         fgid,
@@ -84,7 +99,7 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
     }
   };
   return (
-    <Form className="bg-black text-white p-4 parentDiv ">
+    <Form className="bg-black text-white p-4 parentDiv mb-5 ">
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Latin Name</Form.Label>
         <Form.Control
@@ -112,7 +127,7 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
           type="date"
           placeholder="FirstSeens"
         />
-        {error.flag && <p className="text-danger mt-2">{error.text}</p>}
+        {error.flag && <p className="text-danger mt-2 ">{error.text}</p>}
       </Form.Group>
       <div className="text-center child2">
         <Button
