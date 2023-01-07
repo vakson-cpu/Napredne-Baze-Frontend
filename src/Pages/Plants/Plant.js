@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useSyncExternalStore } from "react";
 import { PlantSrevice } from "../../Services/PlantService";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -16,12 +16,13 @@ const Plant = () => {
   const [sortValue, setsortValue] = useState("");
   const [currentPage, setCurrentPage] = useState(id ?? 1);
   const [PagginationArray, setPagginationArray] = useState([]);
+  const [Rarity, setRarity] = useState(1);
 
   const getAll = async (something) => {
     console.log(something);
     setCurrentPage(something);
     setLoading(true);
-    let result = await PlantSrevice.GetAllPlants(something,sortBy,sortValue);
+    let result = await PlantSrevice.GetAllPlants(something,sortBy,sortValue,Rarity);
     console.log(result);
     if (result.succeeded === true) {
       setPlants(result.data.plants);
@@ -33,17 +34,17 @@ const Plant = () => {
     setLoading(false);
   };
   useEffect(() => {
-    getAll(id,sortBy,sortValue);
+    getAll(id,sortBy,sortValue,Rarity);
   }, [id]);
 
-  const handlePaginate = (item) => {
-    setCurrentPage(item);
-    getAll(item,sortBy,sortValue);
-  };
+  // const handlePaginate = (item) => {
+  //   setCurrentPage(item);
+  //   getAll(item,sortBy,sortValue,Rarity);
+  // };
 
   const handleSearch=async()=>{
     setLoading(true)
-    let result = await PlantSrevice.GetAllPlants("1",sortBy,sortValue);
+    let result = await PlantSrevice.GetAllPlants("1",sortBy,sortValue,Rarity);
     setPlants(result.data.plants);
     setLoading(false)
   }
@@ -55,7 +56,7 @@ const Plant = () => {
         </h1>
         <div className="m-auto mt-5 text-center" style={{ width: "300px" }}>
           {" "}
-          <Search  setSort={setSortBy} setSortValue={setsortValue} sortBy={sortBy} sortValue={sortValue} />
+          <Search  setSort={setSortBy} setSortValue={setsortValue} sortBy={sortBy} sortValue={sortValue} IsPlants={true} rarityValue={Rarity} setRarityValue={setRarity} />
           <Button onClick={handleSearch} className='mt-2 m-auto text-center ' variant='success' >Search</Button>
 
         </div>
