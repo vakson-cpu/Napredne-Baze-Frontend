@@ -17,6 +17,10 @@ const Search = ({
   const LATIN_NAME = "LatinName";
   const Rarity = [
     {
+      Rarity: "All",
+      value: 0,
+    },
+    {
       Rarity: "Common",
       value: Protections.COMMON,
     },
