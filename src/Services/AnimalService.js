@@ -34,7 +34,7 @@ export const AnimalService = {
   },
   GetAllAnimals: async (pageNumber,SortBy,sortValue) => {
     let result = axios
-      .get(`Animal/GetAll?pageNumber=${pageNumber}&SortBy=${SortBy}&sortValue=${sortValue}`)
+      .get(`Animal/GetAll?_pageNumber=${pageNumber}&SortBy=${SortBy}&sortValue=${sortValue}`)
       .then((res) => res.data)
       .catch((err) => err);
     return result;
