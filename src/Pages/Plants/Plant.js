@@ -16,14 +16,14 @@ const Plant = () => {
   const [sortValue, setsortValue] = useState("");
   const [currentPage, setCurrentPage] = useState(id ?? 1);
   const [PagginationArray, setPagginationArray] = useState([]);
-  const [Rarity, setRarity] = useState(1);
+  const [Rarity, setRarity] = useState(0);
 
   const getAll = async (something) => {
-    console.log(something);
     setCurrentPage(something);
     setLoading(true);
     let result = await PlantSrevice.GetAllPlants(something,sortBy,sortValue,Rarity);
-    console.log(result);
+    
+    console.log("Primljeno za paginaciju",result);
     if (result.succeeded === true) {
       setPlants(result.data.plants);
       let helpArray = [];
@@ -34,7 +34,7 @@ const Plant = () => {
     setLoading(false);
   };
   useEffect(() => {
-    getAll(id,sortBy,sortValue,Rarity);
+    getAll(id);
   }, [id]);
 
   // const handlePaginate = (item) => {
@@ -51,7 +51,7 @@ const Plant = () => {
   if (loading === false)
     return (
       <div className="parentWrapper">
-        <h1 className="mt-5 mb-2 text-success text-center ">
+        <h1 className="mt-5 mb-2 text-success text-center fw-bold ">
           All plants located on Golija
         </h1>
         <div className="m-auto mt-5 text-center" style={{ width: "300px" }}>
