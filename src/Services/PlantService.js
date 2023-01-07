@@ -28,7 +28,7 @@ export const PlantSrevice = {
     return res;
   },
   GetAllPlants:async (pageNumber,SortBy,sortValue,Rarity)=>{
-    let result = axios.get(`Plants/Getall?pageNumber=${pageNumber}&SortBy=${SortBy}&sortValue=${sortValue}&Rarity=${Rarity}`).then(res=>res.data).catch(err=>err);
+    let result = axios.get(`Plants/Getall?_pageNumber=${pageNumber}&SortBy=${SortBy}&sortValue=${sortValue}&Rarity=${Rarity}`).then(res=>res.data).catch(err=>err);
     return result;
   }
 };
