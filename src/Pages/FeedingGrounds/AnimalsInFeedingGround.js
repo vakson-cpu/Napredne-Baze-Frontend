@@ -68,8 +68,12 @@ const AnimalsInFeedingGround = () => {
   };
 
   const handleFilter = async()=>{
-    if(filterDate===null && filterDate2===null)
-      setErrorFlags({error:true,message:"Both flags mustn be empty"})
+    setErrorFlags({error:false,message:"One of the flags must not be empty"})
+
+    if(filterDate==="" && filterDate2===""){
+      setErrorFlags({error:true,message:"One of the flags must not be empty"})
+      return
+    }
     let result = await AnimalService.GetAnimalsByFgId(id,filterDate,filterDate2);
     setAnimals(result.data);
   }
@@ -95,8 +99,9 @@ const AnimalsInFeedingGround = () => {
                 <Form.Control type="date" value={filterDate2} onChange={e=>setFilterDate2(e.target.value)} placeholder="pick a date" />
               </div>
             </Form>
-              {errorFlags.error===true && <span className='text-danger text-center'>{errorFlags.message}</span>}
             <Button onClick={handleFilter} className='text-center mt-3' variant='outline-light'>Filter</Button>
+            <br></br>
+            {errorFlags.error===true && <span className='mt-2 text-danger text-center'>{errorFlags.message}</span>}
 
           </div>
           <AnimalTable Animals={Animals} />
@@ -109,7 +114,7 @@ const AnimalsInFeedingGround = () => {
             <label className="ml-5">Pick a time frame: </label>
             <select className="custom-select m-4 mb-0 ">
               {Years.map((item) => (
-                <option onClick={() => handleChange(item)} value={item}>
+                <option key={item} onClick={() => handleChange(item)} value={item}>
                   {item}
                 </option>
               ))}
@@ -133,6 +138,7 @@ const AnimalsInFeedingGround = () => {
           <h1 className="text-center text-white">Manage Animals in Feeding </h1>
           <div className="formDesign">
             <FormForAnimals
+            
               setAnimal={setAnimals}
               Animals={Animals}
               fgid={id}
