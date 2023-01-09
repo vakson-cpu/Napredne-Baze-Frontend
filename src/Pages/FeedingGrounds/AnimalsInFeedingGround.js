@@ -20,6 +20,8 @@ const AnimalsInFeedingGround = () => {
   const [filterDate, setFilterDate] = useState("")
   const [filterDate2, setFilterDate2] = useState("")
   const [Years, setYears] = useState([]);
+  const [errorFlags, setErrorFlags] = useState({error:false,message:""})
+
   const fetchFeedingGround = async (id) => {
     let result = await AnimalService.GetAnimalsByFgId(id, "", "");
     setAnimals(result.data);
@@ -66,6 +68,8 @@ const AnimalsInFeedingGround = () => {
   };
 
   const handleFilter = async()=>{
+    if(filterDate===null && filterDate2===null)
+      setErrorFlags({error:true,message:"Both flags mustn be empty"})
     let result = await AnimalService.GetAnimalsByFgId(id,filterDate,filterDate2);
     setAnimals(result.data);
   }
@@ -91,6 +95,7 @@ const AnimalsInFeedingGround = () => {
                 <Form.Control type="date" value={filterDate2} onChange={e=>setFilterDate2(e.target.value)} placeholder="pick a date" />
               </div>
             </Form>
+              {errorFlags.error===true && <span className='text-danger text-center'>{errorFlags.message}</span>}
             <Button onClick={handleFilter} className='text-center mt-3' variant='outline-light'>Filter</Button>
 
           </div>
