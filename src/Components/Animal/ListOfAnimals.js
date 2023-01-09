@@ -51,6 +51,7 @@ const ListOfAnimals = ({ Animals }) => {
         <div className="d-flex flex-row flex-wrap">
           {List.map((item) => (
             <AnimalCard
+            key={item.id}
               LocalName={item.localName}
               title={item.latinName}
               img={item.image}
@@ -62,6 +63,7 @@ const ListOfAnimals = ({ Animals }) => {
           {PagginationArray.map((item) => {
             return (
               <span
+                key={item}
                 onClick={() => handlePaginate(item)}
                 className={
                   currentPage === item ? "pagi-item active" : "pagi-item"
