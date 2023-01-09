@@ -21,7 +21,6 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
         return element.latinName.match(regex);
       });
     }
-    console.log("matches: ", matches);
     if (matches.length > 8) matches.splice(0, 7);
     setSuggestions(matches);
   };
@@ -31,7 +30,6 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
       let result = await AnimalService.GetAnimalsByRegionId(regionId);
       console.log(result);
       if (result.succeeded === true) {
-        console.log("Rezultat cekanja", result);
         setAllAnimals(result.data);
       }
     };
