@@ -16,12 +16,13 @@ const Animal = () => {
   const fetchAnimals = async (numberOfPage, sortBy, sortValue) => {
     setCurrentPage(numberOfPage);
     setLoading(true);
+    console.log("number of page ",numberOfPage)
     let result = await AnimalService.GetAllAnimals(
       numberOfPage,
       sortBy,
       sortValue
     );
-    console.log(result);
+    console.log("rezultat je",result);
     if (result.succeeded === true) {
       setList(result.data.animals);
       let helpArray = [];
