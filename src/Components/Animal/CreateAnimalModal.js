@@ -20,7 +20,7 @@ export default function CreateAnimalModal({
   const [Villages, setVillages] = useState("");
   const [isLoading, setIsLoadng] = useState(false);
   // const [regions, setRegions] = useState([]);
-
+  const [errorFlags, setErrorFlags] = useState({ error: false, message: "" });
   const regions = useSelector((state) => state.RegionSlice.regions);
 
   const dispatch = useDispatch();
@@ -52,6 +52,16 @@ export default function CreateAnimalModal({
   const handleSubmit = async () => {
     // setIsLoadng(true);
     let token = localStorage.getItem("token");
+    if (
+      LatinName === "" ||
+      LocalName === "" ||
+      checkList.length === 0 ||
+      file === "" ||
+      Villages === ""
+    ) {
+      setErrorFlags({ error: true, message: "All fields must be filled" });
+      return;
+    }
     let response = await AnimalService.InsertAnimal(
       {
         LatinName: LatinName,
@@ -62,7 +72,6 @@ export default function CreateAnimalModal({
       },
       token
     );
-    console.log(response);
     if (response !== undefined) {
       if (response.succeeded === true) {
         dispatch(GetRegions());
@@ -181,6 +190,11 @@ export default function CreateAnimalModal({
                 "Preview..."
               )}
             </div>
+            {errorFlags.error && (
+              <span className="text-center text-danger">
+                {errorFlags.message}
+              </span>
+            )}
           </Modal.Body>
         ) : (
           <Modal.Body>
