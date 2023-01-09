@@ -6,7 +6,9 @@ import AnimalTable from "../../Components/FeedingGrounds/AnimalTable";
 import AnimalsSeenChart from "./AnimalsSeenChart";
 import "./AnimalsInFeedingGrounds.css";
 import FormForAnimals from "../../Components/FeedingGrounds/FormForAnimals";
-
+import AnimalService from "../../Services/AnimalService";
+import { Form,Button } from "react-bootstrap";
+import axios from "axios";
 const AnimalsInFeedingGround = () => {
   const id = useParams().id;
   const regionId = +useParams().regionId;
@@ -15,11 +17,12 @@ const AnimalsInFeedingGround = () => {
   const [dataSet, setDataset] = useState([]);
   const [currentYear, setCurrentYear] = useState("2007-01-01");
   const [endDate, setEndDate] = useState("2008-12-30");
+  const [filterDate, setFilterDate] = useState("")
+  const [filterDate2, setFilterDate2] = useState("")
   const [Years, setYears] = useState([]);
   const fetchFeedingGround = async (id) => {
-    let result = await FeedingGroundsService.GetFeedingGroundById(id);
-    console.log(result);
-    setAnimals(result.data.animals);
+    let result = await AnimalService.GetAnimalsByFgId(id, "", "");
+    setAnimals(result.data);
 
     setLoading(false);
   };
@@ -50,7 +53,6 @@ const AnimalsInFeedingGround = () => {
       setCurrentYear(uniqueDates[0]);
       setYears(uniqueDates);
       handleEndDate(uniqueDates[0]);
-      console.log(uniqueDates);
     }
   }, [Animals]);
 
@@ -62,6 +64,12 @@ const AnimalsInFeedingGround = () => {
     setCurrentYear(item);
     handleEndDate(item);
   };
+
+  const handleFilter = async()=>{
+    let result = await AnimalService.GetAnimalsByFgId(id,filterDate,filterDate2);
+    setAnimals(result.data);
+  }
+
   console.log(dataSet);
   if (Loading === false)
     return (
@@ -71,6 +79,21 @@ const AnimalsInFeedingGround = () => {
           ground number {id}
         </h1>
         <div className="w-75 m-auto ">
+          <div className="bg-dark p-3 text-center">
+            <h3 className='text-center text-white'>Filter Animals by date</h3>
+            <Form className='d-flex flex-row justify-content-center flex-wrap text-center'>
+              <div style={{width:"200px"}}>
+                <label className="text-center">Start date: </label>
+                <Form.Control type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} placeholder="pick a date" />
+              </div>
+              <div style={{width:"200px",marginLeft:"30px"}}>
+                <label className="text-center">End date: </label>
+                <Form.Control type="date" value={filterDate2} onChange={e=>setFilterDate2(e.target.value)} placeholder="pick a date" />
+              </div>
+            </Form>
+            <Button onClick={handleFilter} className='text-center mt-3' variant='outline-light'>Filter</Button>
+
+          </div>
           <AnimalTable Animals={Animals} />
         </div>
         {Years.length > 0 && (
@@ -103,7 +126,7 @@ const AnimalsInFeedingGround = () => {
         )}
         <div>
           <h1 className="text-center text-white">Manage Animals in Feeding </h1>
-          <div style={{ width: "600px", margin: "auto" }}>
+          <div className="formDesign">
             <FormForAnimals
               setAnimal={setAnimals}
               Animals={Animals}
