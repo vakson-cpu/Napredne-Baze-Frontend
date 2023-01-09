@@ -20,8 +20,7 @@ const CreatePlant = () => {
   const [checkList, setCheckList] = useState([]);
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [Toast2, setToast2] = useState(false);
+  const [errorFlags, setErrorFlags] = useState("");
 
   const dispatch = useDispatch();
 
@@ -46,8 +45,15 @@ const CreatePlant = () => {
     console.log(token);
     setLoading(true);
     let prot = handleProtections(protection);
-    console.log(checkList);
     // let response=await PlantSrevice.CreatePlant({LatinName:LatinName,LocalName:LocalName,ProtectionId:protection,Regions:checkList},file)
+    if (
+      LocalName === "" ||
+      LatinName === "" ||
+      file === "" ||
+      checkList.length === 0
+    ) {
+      setErrorFlags({ error: true, message: "All fields must be flled" });
+    }
     let response = await PlantSrevice.CreatePlant(
       {
         LatinName: LatinName,
@@ -197,7 +203,12 @@ const CreatePlant = () => {
                     data-error-message="Image is required"
                   />
                 </div>
-
+                <br></br>
+                {errorFlags.error && (
+                  <span className="text-center text-danger">
+                    {errorFlags.message}
+                  </span>
+                )}
                 <input onClick={handleSubmit} type="submit" value="Create" />
               </form>
             ) : (
