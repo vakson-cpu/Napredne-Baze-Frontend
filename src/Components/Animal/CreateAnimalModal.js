@@ -70,8 +70,7 @@ export default function CreateAnimalModal({
         setShow1(true);
         onClose(false);
         return;
-      }
-      else {
+      } else {
         setShow2(true);
         onClose(false);
       }
@@ -145,7 +144,7 @@ export default function CreateAnimalModal({
                 <label className="text-white fs-5">Pick a Region</label>
                 {regions.map((item) => {
                   return (
-                    <div className="regions-box-animal">
+                    <div key={item.id} className="regions-box-animal">
                       <label className="label-checkbox">{item.name}</label>
                       <input
                         type="checkbox"
