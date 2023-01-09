@@ -39,7 +39,7 @@ export const AnimalService = {
       .catch((err) => err);
     return result;
   },
-  GetAnimalsByFgId:async(startDate,endDate,id)=>{
+  GetAnimalsByFgId:async(id,startDate,endDate)=>{
     let result = await axios.get(`Animal/GetByFgId/${id}?startDate=${startDate}&endDate=${endDate}`).then(res=>res.data).catch(err=>err);
     return result;
   }
