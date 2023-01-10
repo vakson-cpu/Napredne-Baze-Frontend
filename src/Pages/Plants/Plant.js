@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useSyncExternalStore } from "react";
+import React, { useEffect, useState } from "react";
 import { PlantSrevice } from "../../Services/PlantService";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -22,9 +22,7 @@ const Plant = () => {
     setCurrentPage(something);
     setLoading(true);
     let result = await PlantSrevice.GetAllPlants(something,sortBy,sortValue,Rarity);
-    
-    console.log("Primljeno za paginaciju",result);
-    if (result.succeeded === true) {
+        if (result.succeeded === true) {
       setPlants(result.data.plants);
       let helpArray = [];
       for (let i = 0; i < Math.ceil(result.data.count / 8); i++)
