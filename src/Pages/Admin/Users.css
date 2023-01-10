@@ -1,0 +1,6 @@
+.User-Table{
+    width:700px;
+    max-height: 700px;
+    overflow-y: auto;
+    margin: auto;
+}
