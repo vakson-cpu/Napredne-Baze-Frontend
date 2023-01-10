@@ -18,6 +18,7 @@ import { signIn } from "./Redux/AuthSlice";
 import NotFound from "./Pages/NotFound";
 import Plant from "./Pages/Plants/Plant";
 import Animal from "./Pages/Animals/Animal";
+import Users from "./Pages/Admin/Users";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const App = () => {
         />
         <Route path="Plants/Get/:pageNumber" element={<Plant/>} />
         <Route path="Animals/GetAll/:pageNumber" element={<Animal/>} />
-
+        <Route path="Users/GetAllUsers" element={<Users/>} />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
       <Footer></Footer>
