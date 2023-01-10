@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { UserService } from "../../Services/UserService";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import { LogInUser } from "../../Redux/AuthSlice";
 import jwtDecode from "jwt-decode";
 
 import "./LoginModal.css";
-import { Roles } from "../../Enums/RoleEnum";
 export default function LoginModal({ handleShow, show }) {
   const [switchSign, setSwitchSign] = useState(true); //Initially set on true for log-in
   const dispatch = useDispatch();
@@ -21,7 +20,6 @@ export default function LoginModal({ handleShow, show }) {
       await UserService.Register({ Name, LastName, Email, Password });
       setSwitchSign(true);
     } else {
-      // let response=await UserService.LogIn({ Email, Password });
       let response = await dispatch(LogInUser({ Email, Password }));
       console.log(response.payload);
       if (response.payload.succeeded) {
@@ -47,7 +45,7 @@ export default function LoginModal({ handleShow, show }) {
         <form className="login-form">
           <h3 className="mb-2">{switchSign ? "Sign-in" : "Sign-Up"}</h3>
           <input
-            className="form--input"
+            className="form--input mt-5"
             type="text"
             placeholder="Email"
             value={Email}
