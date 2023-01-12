@@ -5,6 +5,6 @@ axios.defaults.baseURL = baseURL;
 
 export  const RegionService = {
   GetRegions: async() =>
-    await axios.get("Regions/GetAll").then((res) =>res.data ).catch((err)=>err)
+     axios.get("Regions/GetAll").then((res) =>res.data ).catch((err)=>err)
 
 };
