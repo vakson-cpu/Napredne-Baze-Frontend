@@ -31,7 +31,16 @@ export const UserService = {
       .then((res) => res.data)
       .catch((err) => err);
   },
-  MakeWorker:async(payload)=>{
-    return await axios.post("Users/CreateWorker",payload).then(res=>res.data).catch(err=>err)
-  }
+  MakeWorker: async (payload) => {
+    return axios
+      .post("Users/CreateWorker", payload)
+      .then((res) => res.data)
+      .catch((err) => err);
+  },
+  GetWorkersInfo: async (payload) => {
+    return axios
+      .get(`Users/GetWorkerInfo/${payload}`)
+      .then((res) => res.data)
+      .catch((err) => err);
+  },
 };
