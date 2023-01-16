@@ -43,4 +43,10 @@ export const UserService = {
       .then((res) => res.data)
       .catch((err) => err);
   },
+  Downgrade: async (userId) => {
+    return axios
+      .put(`Users/Downgrade/${userId}`)
+      .then((res) => res.data)
+      .catch((err) => err);
+  },
 };
