@@ -40,7 +40,7 @@ const CreatePlant = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let token;
-    if (localStorage.key("token") != undefined)
+    if (localStorage.key("token") !== undefined)
       token = localStorage.getItem("token");
     console.log(token);
     setLoading(true);
