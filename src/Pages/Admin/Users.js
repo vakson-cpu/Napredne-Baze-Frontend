@@ -20,7 +20,7 @@ const Users = () => {
       <h1 className='text-center text-success fw-bold'>Insights into all users of the app</h1>
 
       {
-        Loading===false? <div   className='bg-light User-Table mt-5 mb-5 '> <UserDetails Users={Users} /></div>: 
+        Loading===false? <div   className='bg-light User-Table mt-5 mb-5 '> <UserDetails Users={Users} setUsers={setUsers} /></div>: 
         <div>Loading...</div>
       
       }
