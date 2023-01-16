@@ -85,7 +85,7 @@
     display: none;
   }
   .Navbar-Links2 {
-    background-color: rgb(243, 243, 243);
+    background-color: rgba(243, 243, 243, 0.315);
     display: block;
     width: 100%;
     display: flex;
