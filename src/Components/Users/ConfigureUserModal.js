@@ -2,30 +2,52 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Spinner } from "react-bootstrap";
 import { UserService } from "../../Services/UserService";
 import { useSelector } from "react-redux";
-import './ConfigureUserModal.css'
-const ConfigureUserModal = ({ show, onClose, userId, roleId }) => {
+import "./ConfigureUserModal.css";
+const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
   const [isLoading, setIsLoading] = useState(false);
   const Regions = useSelector((state) => state.RegionSlice.regions);
-  console.log(Regions);
+  const [selectedRegion, setSelectedRegion] = useState();
   const [RequestResponse, setRequestResponse] = useState({
     completed: false,
     succeeded: false,
     message: "",
   });
 
-  console.log(true + true);
+  console.log(selectedRegion);
+
   const [UserInfo, setUserInfo] = useState({
     role: roleId || 1,
     name: roleId === 2 ? "Worker" : "User",
   });
-  const handleReset = () => {};
+  const handleReset = () => {
+    setRequestResponse({ ...RequestResponse, completed: false });
+    onClose(false);
+  };
   const [Salary, setSalary] = useState("");
   const WORKER = 2;
   const USER = 3;
   const handleSubmit = async () => {
     if (UserInfo.role === WORKER) {
-      let result = await UserService.MakeWorker({ userId, Salary });
-      if (result === undefined || result === null) {
+      try {
+        let result = await UserService.MakeWorker({ userId, Salary });
+        if (result.succeeded) {
+          let users = await UserService.GetAllUsers();
+          setUsers(users.data);
+          setRequestResponse({
+            completed: true,
+            succeeded: true,
+            message: "Successful changes",
+          });
+          return;
+        } else {
+          setRequestResponse({
+            completed: true,
+            succeeded: false,
+            message: "Something went Wrong!",
+          });
+          return;
+        }
+      } catch (err) {
         setRequestResponse({
           completed: true,
           succeeded: false,
@@ -33,11 +55,31 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId }) => {
         });
         return;
       }
-      if (result.succeeded) {
+    } else {
+      try {
+        let result = await UserService.Downgrade(userId);
+        if (result.succeeded) {
+          let users = await UserService.GetAllUsers();
+          setUsers(users.data);
+          setRequestResponse({
+            completed: true,
+            succeeded: true,
+            message: "Successful changes",
+          });
+          return;
+        } else {
+          setRequestResponse({
+            completed: true,
+            succeeded: false,
+            message: "Something went wrong...",
+          });
+          return;
+        }
+      } catch (err) {
         setRequestResponse({
           completed: true,
-          succeeded: true,
-          message: "Successful changes",
+          succeeded: false,
+          message: "Something went wrong...",
         });
         return;
       }
@@ -45,8 +87,9 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId }) => {
   };
   const handleFetchInfo = async () => {
     let result = await UserService.GetWorkersInfo(userId);
-    console.log("rezult is", result);
-  };
+    console.log(result);
+    setSalary(result.data.salary)
+ };
 
   useEffect(() => {
     if (UserInfo.role === WORKER) handleFetchInfo(userId);
@@ -60,7 +103,7 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId }) => {
     if (value === "Worker") setUserInfo({ role: WORKER, name: "Worker" });
     else setUserInfo({ role: USER, name: "User" });
   };
-  console.log("UserInfo ", UserInfo);
+
   const handleSelectValue = (value) => {};
   if (RequestResponse.completed === false)
     return (
@@ -79,7 +122,7 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId }) => {
           {isLoading === false ? (
             <Modal.Body className="bg-dark  d-flex flex-column justify-content-center ">
               <div>
-                <label className="text-warning mx-5 mt-b">Edit Role</label>
+                <label className="text-warning mx-5 mt-3">Edit Role</label>
                 <select
                   value={UserInfo.name}
                   onChange={(e) => handleSelectChange(e.target.value)}
@@ -93,15 +136,21 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId }) => {
                 <div>
                   <label className="text-warning mx-5 mt-2">Salary</label>
                   <input
+                  className="mt-5"
                     type="text"
                     value={Salary}
                     onChange={(e) => setSalary(e.target.value)}
                   />
+                  <br style={{marginBottom:"50px"}}></br>
+                  <div className='mx-5'>
+                    <h3 className="text-white fw-bold">Select a Region to work in</h3>
                   {Regions.map((item) => (
-                    <div className="gridRadio">
-                      <label className='text-white'>{item.name}</label> <input type="radio" />
+                    <div className="gridRadio ">
+                      <label className="text-warning">{item.name}</label>{" "}
+                      <input  name="radioz" value={item.id} onChange={(e)=>setSelectedRegion(e.target.value)} type="radio" />
                     </div>
                   ))}
+                  </div>
                 </div>
               )}
             </Modal.Body>
@@ -133,21 +182,28 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId }) => {
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className="text-center"
     >
       <Modal.Header
         className={
           RequestResponse.succeeded
-            ? "bg dark text-success"
-            : "bg dark text-danger"
+            ? "bg dark text-success text-center"
+            : "bg dark text-danger text-center"
         }
       >
         <Modal.Title
-          id="contained-modal-title-vcenter bg-dark"
-          onClick={handleReset}
+          className="text-center"
+          id="contained-modal-title-vcenter "
+          onClick={() => handleReset()}
         >
           {RequestResponse.message}
         </Modal.Title>
       </Modal.Header>
+      <Modal.Body className="text-center">
+        <Button onClick={() => handleReset()} variant="outline-danger">
+          Close
+        </Button>
+      </Modal.Body>
     </Modal>
   );
 };
