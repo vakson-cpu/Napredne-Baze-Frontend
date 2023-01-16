@@ -11,6 +11,7 @@ const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
 
   const IsLogged = useSelector((state) => state.AuthSlice.IsLoggedIn);
+  const role = useSelector((state) => state.AuthSlice.Role);
   const dispatch = useDispatch();
   const handleLogin = () => {
     if (!IsLogged) setShowModal(!showModal);
@@ -36,9 +37,14 @@ const Navbar = () => {
             <Link to={"Animals/GetAll/1"}>
               <p>Animals</p>
             </Link>
-            <Link  to={"Plants/Get/1"}>
+            <Link to={"Plants/Get/1"}>
               <p>Plants</p>
             </Link>
+            {role && (
+              <Link to={"Users/GetAllUsers"}>
+                <p>Users</p>
+              </Link>
+            )}
             <button className="custom-button" onClick={handleLogin}>
               {IsLogged ? "Log-Out" : "Log-in"}
             </button>
@@ -50,21 +56,26 @@ const Navbar = () => {
       </div>
       {openNavbar && (
         <div className="Navbar-Links2">
-          <Link to={"Nekilink"}>
+          <Link to={"/"}>
             <p>Home</p>
           </Link>
-          <Link to={"Nekilink"}>
+          <Link to={"Regions"}>
             <p>Regions</p>
           </Link>
-          <Link to={"Nekilink"}>
+          <Link to={"Animals/GetAll/1"}>
             <p>Animals</p>
           </Link>
-          <Link to={"Nekilink"}>
+          <Link to={"Plants/Get/1"}>
             <p>Plants</p>
           </Link>
-          <Link to={"Nekilink"}>
-            <p>Log-In</p>
-          </Link>
+          {role && (
+              <Link to={"Users/GetAllUsers"}>
+                <p>Users</p>
+              </Link>
+            )}
+          <button className="custom-button" onClick={handleLogin}>
+            {IsLogged ? "Log-Out" : "Log-in"}
+          </button>
         </div>
       )}
     </>
