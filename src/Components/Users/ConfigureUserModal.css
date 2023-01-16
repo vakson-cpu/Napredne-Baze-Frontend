@@ -1,4 +1,6 @@
 .gridRadio{
     display:grid;
-    grid-template-columns:200px 50px;
+    grid-template-columns:200px 50px;   
+    width: 300px;
+    padding-top: 10px;
 }
