@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Table, Badge, Button } from "react-bootstrap";
 import { Roles } from "../../Enums/RoleEnum";
 import ConfigureUserModal from "./ConfigureUserModal";
-const UserDetails = ({ Users }) => {
+const UserDetails = ({ Users,setUsers }) => {
   const [show, setShow] = useState(false);
   const [userId, setUserId] = useState("");
   const [roleId, setRoleId] = useState("");
@@ -85,6 +85,7 @@ const UserDetails = ({ Users }) => {
         onClose={setShow}
         userId={userId}
         roleId={roleId}
+        setUsers={setUsers}
       />
     </>
   );
