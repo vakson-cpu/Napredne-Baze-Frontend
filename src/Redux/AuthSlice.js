@@ -33,10 +33,11 @@ export const AuthSlice = createSlice({
       state.Role=Roles.Guest;
       localStorage.clear();
     },
-    signIn:(state,payload)=>{
+    signIn:(state,action)=>{
+
       state.status=STATUS.SUCCEDED;
       state.IsLoggedIn=true;
-      state.Role=payload;
+      state.Role=action.payload;
     }
   },
   extraReducers: {
