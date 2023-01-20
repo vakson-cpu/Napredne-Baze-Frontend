@@ -8,6 +8,7 @@ export const UserService = {
     await axios
       .post("Users/register", registrationData)
       .then((res) => {
+        console.log(res)
         return res.data;
       })
       .catch((err) => {
