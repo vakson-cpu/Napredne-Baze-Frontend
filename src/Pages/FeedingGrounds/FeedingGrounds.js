@@ -9,12 +9,12 @@ const FeedingGrounds = () => {
   const id = +useParams().regionId;
   const [FeedingGrounds, setFeedingGrounds] = useState([]);
   const [Loading, setLoading] = useState(true);
-  const page= parseInt(useParams().pageNumber);
-  const [currentPage, setCurrentPage] = useState(page || 1)
+  const page = parseInt(useParams().pageNumber);
+  const [currentPage, setCurrentPage] = useState(page || 1);
   useEffect(() => {
     async function getRegion() {
       setLoading(true);
-      let result = await FeedingGroundsService.GetByRegionId(id,page);
+      let result = await FeedingGroundsService.GetByRegionId(id, page);
       setFeedingGrounds(result.data);
       setLoading(false);
     }
