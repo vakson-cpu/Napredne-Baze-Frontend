@@ -3,49 +3,85 @@ import { Modal, Button, Spinner } from "react-bootstrap";
 import { UserService } from "../../Services/UserService";
 import { useSelector } from "react-redux";
 import "./ConfigureUserModal.css";
+import { RegionService } from "../../Services/RegionService";
 const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
+  console.log("ovo prima ", roleId);
+  const WORKER = 2;
+  const USER = 3;
   const [isLoading, setIsLoading] = useState(false);
+  const [first, setFirst] = useState(true);
   const Regions = useSelector((state) => state.RegionSlice.regions);
-  const [selectedRegion, setSelectedRegion] = useState();
+  const [selectedRegion, setSelectedRegion] = useState(1);
   const [RequestResponse, setRequestResponse] = useState({
     completed: false,
     succeeded: false,
     message: "",
   });
-
-  console.log(selectedRegion);
-
+  console.log("selected:", selectedRegion);
   const [UserInfo, setUserInfo] = useState({
-    role: roleId || 1,
+    role: roleId,
     name: roleId === 2 ? "Worker" : "User",
   });
   const handleReset = () => {
     setRequestResponse({ ...RequestResponse, completed: false });
     onClose(false);
+    setFirst(true);
   };
   const [Salary, setSalary] = useState("");
-  const WORKER = 2;
-  const USER = 3;
+
   const handleSubmit = async () => {
     if (UserInfo.role === WORKER) {
       try {
-        let result = await UserService.MakeWorker({ userId, Salary });
-        if (result.succeeded) {
-          let users = await UserService.GetAllUsers();
-          setUsers(users.data);
-          setRequestResponse({
-            completed: true,
-            succeeded: true,
-            message: "Successful changes",
+        //Case if its an update
+        if (roleId === UserInfo.role) {
+          let result = await RegionService.UpdateWorker(
+            userId,
+            selectedRegion,
+            Salary
+          );
+          if (result.succeeded) {
+            let users = await UserService.GetAllUsers();
+            setUsers(users.data);
+            setRequestResponse({
+              completed: true,
+              succeeded: true,
+              message: "Successful changes",
+            });
+            return;
+          } else {
+            setRequestResponse({
+              completed: true,
+              succeeded: false,
+              message: "Something went Wrong!",
+            });
+            return;
+          }
+        }
+
+        //Case if its a new user to become a worker
+        else {
+          let result = await UserService.MakeWorker({
+            userId,
+            Salary,
+            regionId: selectedRegion,
           });
-          return;
-        } else {
-          setRequestResponse({
-            completed: true,
-            succeeded: false,
-            message: "Something went Wrong!",
-          });
-          return;
+          if (result.succeeded) {
+            let users = await UserService.GetAllUsers();
+            setUsers(users.data);
+            setRequestResponse({
+              completed: true,
+              succeeded: true,
+              message: "Successful changes",
+            });
+            return;
+          } else {
+            setRequestResponse({
+              completed: true,
+              succeeded: false,
+              message: "Something went Wrong!",
+            });
+            return;
+          }
         }
       } catch (err) {
         setRequestResponse({
@@ -57,6 +93,7 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
       }
     } else {
       try {
+        //Downgrade user to worker
         let result = await UserService.Downgrade(userId);
         if (result.succeeded) {
           let users = await UserService.GetAllUsers();
@@ -87,24 +124,35 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
   };
   const handleFetchInfo = async () => {
     let result = await UserService.GetWorkersInfo(userId);
-    console.log(result);
-    setSalary(result.data.salary)
- };
+    console.log("stiglo je :", result);
+    setSalary(result.data.salary);
+    console.log("RID<", result.data.regionId);
+    setSelectedRegion(result.data.regionId);
+  };
 
   useEffect(() => {
-    if (UserInfo.role === WORKER) handleFetchInfo(userId);
+    console.log("pozvano je");
+    // if (first && roleId!=="") {
+    //   if (roleId === WORKER) handleFetchInfo(userId);
+    //   setFirst(false);
+    // } else if (UserInfo.role === WORKER) handleFetchInfo(userId);
+    if (roleId === WORKER) handleFetchInfo(userId);
     setUserInfo({
       role: roleId || 1,
       ...(roleId === 2 ? { name: "Worker" } : { name: "User" }),
     });
-  }, [roleId]);
+  }, [show]);
 
   const handleSelectChange = (value) => {
     if (value === "Worker") setUserInfo({ role: WORKER, name: "Worker" });
     else setUserInfo({ role: USER, name: "User" });
   };
-
-  const handleSelectValue = (value) => {};
+  const handleChecked = (item) => {
+    console.log("this is", selectedRegion);
+    console.log("compared to this", item.id);
+    if (selectedRegion === item.id) return true;
+    return false;
+  };
   if (RequestResponse.completed === false)
     return (
       <div>
@@ -136,20 +184,31 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
                 <div>
                   <label className="text-warning mx-5 mt-2">Salary</label>
                   <input
-                  className="mt-5"
+                    className="mt-5"
                     type="text"
                     value={Salary}
                     onChange={(e) => setSalary(e.target.value)}
                   />
-                  <br style={{marginBottom:"50px"}}></br>
-                  <div className='mx-5'>
-                    <h3 className="text-white fw-bold">Select a Region to work in</h3>
-                  {Regions.map((item) => (
-                    <div className="gridRadio ">
-                      <label className="text-warning">{item.name}</label>{" "}
-                      <input  name="radioz" value={item.id} onChange={(e)=>setSelectedRegion(e.target.value)} type="radio" />
-                    </div>
-                  ))}
+                  <br style={{ marginBottom: "50px" }}></br>
+                  <div className="mx-5">
+                    <h3 className="text-white fw-bold">
+                      Select a Region to work in
+                    </h3>
+                    {Regions.map((item, index) => (
+                      <div key={index} className="gridRadio ">
+                        <label className="text-warning">{item.name}</label>{" "}
+                        <input
+                          key={index + 3}
+                          className="text-warning"
+                          name="radioz"
+                          style={{ width: "18px" }}
+                          type="radio"
+                          value={item.id}
+                          checked={+item.id === +selectedRegion}
+                          onChange={(e) => setSelectedRegion(e.target.value)}
+                        />
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
@@ -200,7 +259,7 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="text-center">
-        <Button onClick={() => handleReset()} variant="outline-danger">
+        <Button className="text-center" onClick={() => handleReset()} variant="outline-danger">
           Close
         </Button>
       </Modal.Body>
