@@ -7,6 +7,7 @@ import Navbar from "./Shared/Navbar/Navbar";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import CreatePlant from "./Components/Plants/CreatePlantsForm/CreatePlant";
+import { Roles } from "./Enums/RoleEnum";
 
 import { GetRegions } from "./Redux/RegionSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +20,8 @@ import NotFound from "./Pages/NotFound";
 import Plant from "./Pages/Plants/Plant";
 import Animal from "./Pages/Animals/Animal";
 import Users from "./Pages/Admin/Users";
+import ManageWorkers from "./Pages/Admin/ManageWorkers";
+import ProtectedRoute from "./ProtectedRoute";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -38,9 +41,16 @@ const App = () => {
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Info />}></Route>
-        <Route path="Regions" element={<Region />} />
+        <Route path="Regions" element={<Region />} />{" "}
         <Route path="Regions/:regionId" element={<RegionInfoPage />} />
-        <Route path="Plants/Create" element={<CreatePlant />} />
+        <Route
+          path="Plants/Create"
+          element={
+            <ProtectedRoute permission={Roles.Administrator}>
+              <CreatePlant />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="FeedingGrounds/:regionId/:pageNumber"
           element={<FeedingGrounds />}
@@ -49,9 +59,24 @@ const App = () => {
           path="FeedingGrounds/:regionId/FgId/:id/Animals"
           element={<AnimalsInFeedingGround />}
         />
-        <Route path="Plants/Get/:pageNumber" element={<Plant/>} />
-        <Route path="Animals/GetAll/:pageNumber" element={<Animal/>} />
-        <Route path="Users/GetAllUsers" element={<Users/>} />
+        <Route path="Plants/Get/:pageNumber" element={<Plant />} />
+        <Route path="Animals/GetAll/:pageNumber" element={<Animal />} />
+        <Route
+          path="Users/GetAllUsers"
+          element={
+            <ProtectedRoute permission={Roles.Administrator}>
+              <Users />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="Users/ManageFeedingGrounds"
+          element={
+            <ProtectedRoute permission={Roles.Administrator}>
+              <ManageWorkers />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
       <Footer></Footer>
