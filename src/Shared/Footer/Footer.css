@@ -3,6 +3,7 @@
 .footer-container{
     text-align: center;
     width: 100%;
+    padding:20px;
 }
 .row{
   --bs-gutter-x: 0rem;
