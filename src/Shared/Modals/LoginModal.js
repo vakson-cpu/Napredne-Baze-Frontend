@@ -23,21 +23,32 @@ export default function LoginModal({ handleShow, show }) {
 
   const handleSubmit = async () => {
     if (switchSign === false) {
-      let response = await UserService.Register({
-        Name,
-        LastName,
-        Email,
-        Password,
-      });
-      console.log(response);
-      if (response.succeeded) {
+      try {
+        let response = await UserService.Register({
+          Name,
+          LastName,
+          Email,
+          Password,
+        });
+        console.log(response);
+        if (response.succeeded) {
+          setRequestResults({
+            completed: true,
+            succeeded: true,
+            message: "Succesfully completed action",
+          });
+        }
+        setSwitchSign(true);
+      } catch (err) {
         setRequestResults({
           completed: true,
-          succeeded: true,
-          message: "Succesfully completed action",
+          succeeded: false,
+          message:
+            "Something went wrong! Make sure to insert fields correctly," +
+            "Name and lastname must start with capital letter and be at least 5 characters long, " +
+            "Password must contain capital letter and at least 8 chars with letters and numbers",
         });
       }
-      setSwitchSign(true);
     } else {
       let response = await dispatch(LogInUser({ Email, Password }));
       console.log(response);
@@ -147,7 +158,9 @@ export default function LoginModal({ handleShow, show }) {
     >
       <ModalBody
         className={
-          RequestResults.succeeded ? "text-success text-center fw-bold" : "text-danger text-center fw-bold"
+          RequestResults.succeeded
+            ? "text-success text-center fw-bold"
+            : "text-danger text-center fw-bold"
         }
       >
         {RequestResults.message}
