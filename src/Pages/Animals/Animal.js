@@ -33,7 +33,12 @@ const Animal = () => {
   const handleSearch = async () => {
     setLoading(true);
     let result = await AnimalService.GetAllAnimals("1", sortBy, sortValue);
+    let helpArray = [];
+
     setList(result.data.animals);
+    for (let i = 0; i < Math.ceil(result.data.count / 8); i++)
+      helpArray.push(i + 1);
+    setPagginationArray(helpArray);
     setLoading(false);
   };
   useEffect(() => {
