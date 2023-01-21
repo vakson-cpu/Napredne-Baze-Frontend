@@ -46,7 +46,7 @@ const App = () => {
         <Route
           path="Plants/Create"
           element={
-            <ProtectedRoute permission={Roles.Administrator}>
+            <ProtectedRoute permission={Roles.Worker}>
               <CreatePlant />
             </ProtectedRoute>
           }
@@ -85,3 +85,4 @@ const App = () => {
 };
 
 export default App;
+
