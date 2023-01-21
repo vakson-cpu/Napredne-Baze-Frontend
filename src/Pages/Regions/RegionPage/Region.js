@@ -26,8 +26,8 @@ const Region = () => {
         <h1 className='title-box'>Welcome to Regions</h1>
 
       </div>
-      <div className="w-75 m-auto text-center mt-5">
-        <h1>About regions...</h1>
+      <div  className='regions__bg'>      <div className="w-75 m-auto text-center  pt-3">
+        <h1 className='fw-bold'>About Regions</h1>
         <p className="mt-5">
           In order to maintain good organisation of everything, National Park
           Golija has been divided in regions. Each regions has one or more
@@ -49,13 +49,20 @@ const Region = () => {
           ))}
         </div>
       ) : (
-        <div className='text-center mt-5'>
-          <Spinner className='m-auto text-center' animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <div className="text-center mt-5">
+        <Spinner
+          className="m-auto text-center"
+          animation="border"
+          role="status"
+        >
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
       )}
+      </div>
+
     </>
+    
   );
 };
 
