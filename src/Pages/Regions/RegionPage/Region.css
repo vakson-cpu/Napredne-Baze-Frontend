@@ -19,3 +19,10 @@
     transform: translateY(-340px);
     color: white;
 }
+
+.regions__bg{   
+    background-image: url('../../../Assets/RegionsBackground.jpg');
+    background-size: cover;
+    background-repeat:no-repeat;
+    padding: 30px;
+}
