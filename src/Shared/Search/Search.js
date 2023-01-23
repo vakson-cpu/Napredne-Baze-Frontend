@@ -66,7 +66,7 @@ const Search = ({
         className="mt-2"
         aria-label="Search By"
       >
-        {Rarity.map(item=><option value={item.value}>{item.Rarity}</option>)}
+        {Rarity.map((item,index)=><option key={index} value={item.value}>{item.Rarity}</option>)}
       </Form.Select>
 }
     </div>
