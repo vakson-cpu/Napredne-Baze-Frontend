@@ -9,13 +9,16 @@ export const RegionService = {
       .get("Regions/GetAll")
       .then((res) => res.data)
       .catch((err) => err),
-  UpdateWorker: async (workerId, regionId, salary) =>
+  UpdateWorker: async (workerId, regionId, salary,token) =>
     axios
       .put("Regions/UpdateWorker", {
         userId: workerId,
         Salary: salary,
         regionid: regionId,
-      })
+      },{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }})
       .then((res) => res.data)
       .catch((err) => err),
 };
