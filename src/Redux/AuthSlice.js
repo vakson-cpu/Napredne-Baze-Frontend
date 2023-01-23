@@ -11,7 +11,7 @@ const initialState = {
 
 
 export const LogInUser = createAsyncThunk(
-    "Users/register",
+    "Users/login",
     async (payload, thunkAPI) => {
       try {
         return await UserService.LogIn(payload);
@@ -41,17 +41,20 @@ export const AuthSlice = createSlice({
     }
   },
   extraReducers: {
-    [LogInUser.rejected]: (state, action) => {
-      state.status = STATUS.FAILED;
-      state.IsLoggedIn=false;
 
-    },
     [LogInUser.pending]: (state, action) => {
       state.status = STATUS.PENDING;
     },
+    [LogInUser.rejected]: (state, action) => {
+      state.status = STATUS.FAILED;
+      state.IsLoggedIn=false;
+    },
     [LogInUser.fulfilled]: (state, action) => {
-      state.status = STATUS.SUCCEDED;
-      state.IsLoggedIn=true;
+      if(action.payload.data === undefined)
+      return
+        state.status = STATUS.SUCCEDED;
+        state.IsLoggedIn=true;
+      
     },
   },
 });
