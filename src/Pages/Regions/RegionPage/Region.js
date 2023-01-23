@@ -28,7 +28,7 @@ const Region = () => {
       </div>
       <div  className='regions__bg'>      <div className="w-75 m-auto text-center  pt-3">
         <h1 className='fw-bold'>About Regions</h1>
-        <p className="mt-5">
+        <p className="mt-5 paraBg  text-center ">
           In order to maintain good organisation of everything, National Park
           Golija has been divided in regions. Each regions has one or more
           feeding grounds. If you want to find out more details about our
