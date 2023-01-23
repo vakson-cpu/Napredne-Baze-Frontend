@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter } from "react-bootstrap";
 import { UserService } from "../../Services/UserService";
 import { useDispatch } from "react-redux";
+import {GetWorkersInfo} from '../.././Redux/WorkerSlice'
 import { LogInUser, signIn } from "../../Redux/AuthSlice";
 import jwtDecode from "jwt-decode";
 
@@ -51,8 +52,8 @@ export default function LoginModal({ handleShow, show }) {
       }
     } else {
       let response = await dispatch(LogInUser({ Email, Password }));
-      console.log(response);
       if (response.payload.succeeded) {
+        console.log("Why am i here")
         let user = jwtDecode(response.payload.data);
         console.log(user);
         let role =
@@ -63,6 +64,9 @@ export default function LoginModal({ handleShow, show }) {
         localStorage.setItem("Role", role);
         localStorage.setItem("Id", user.Id);
         dispatch(signIn(role));
+        if(role==="Worker"){
+          dispatch(GetWorkersInfo(user.Id))
+        }
         handleShow(false);
         setRequestResults({
           completed: true,
