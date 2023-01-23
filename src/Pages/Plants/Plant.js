@@ -60,8 +60,9 @@ const Plant = () => {
         </div>
         {plants.length > 0 ? (
           <div className="d-flex flex-row flex-wrap justify-content-center mt-5">
-            {plants.map((item) => (
+            {plants.map((item,index) => (
               <PlantCard
+              key={index}
                 LocalName={item.localName}
                 title={item.latinName}
                 img={item.image}
@@ -80,9 +81,9 @@ const Plant = () => {
           className="childWrapper d-flex d-row flex-wrap mt-2 mb-5"
           style={{ marginLeft: "150px" }}
         >
-          {PagginationArray.map((item) => {
+          {PagginationArray.map((item,index) => {
             return (
-              <Link className="pagi-Link" to={`/Plants/Get/${item}`}>
+              <Link key={index} className="pagi-Link" to={`/Plants/Get/${item}`}>
                 <span
                   className={
                     currentPage === item ? "pagi-item active" : "pagi-item"
