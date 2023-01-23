@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Protections } from "../../../Enums/ProtectionsEnum";
 import { STATUS } from "../../../Enums/StatusEnum";
 import { NivePieChart } from "../../../Shared/Charts/NivePieChart";
 import { Link, useParams } from "react-router-dom";
@@ -13,15 +12,15 @@ import CreateAnimalModal from "../../../Components/Animal/CreateAnimalModal";
 import CustomToasty from "../../../Shared/Toasty/CustomToasty";
 const RegionInfoPage = () => {
   const Id = +useParams().regionId;
-  console.log(Id);
   const [Region, setRegion] = useState({});
   const [Plants, setPlants] = useState([]);
   const Regions = useSelector((state) => state.RegionSlice.regions);
   const status = useSelector((state) => state.RegionSlice.status);
+  const workersRegion = useSelector((state) => state.WorkerSlice.regionId);
   const [currentPage, setCurrentPage] = useState(1);
   const [PagginationArray, setPagginationArray] = useState([]);
   const [toDisplayPlants, setToDisplayPlants] = useState([]);
-  const [showToasty, setshowToasty] = useState(false)
+  const [showToasty, setshowToasty] = useState(false);
   const [showToasty2, setShowToasty2] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -70,7 +69,7 @@ const RegionInfoPage = () => {
 
       setPagginationArray(DummyArray);
     }
-  }, [status]);
+  }, [status, Regions]);
 
   console.log(Regions);
   const handlePaginate = (item) => {
@@ -136,8 +135,9 @@ const RegionInfoPage = () => {
               </Link>
             )}
             <div className="d-flex flex-row flex-wrap">
-              {toDisplayPlants.map((item) => (
+              {toDisplayPlants.map((item, index) => (
                 <PlantCard
+                  key={index}
                   LocalName={item.localName}
                   title={item.latinName}
                   img={item.image}
@@ -147,9 +147,10 @@ const RegionInfoPage = () => {
             </div>
 
             <div className="d-flex d-row flex-wrap" style={{ margin: "23px" }}>
-              {PagginationArray.map((item) => {
+              {PagginationArray.map((item, index) => {
                 return (
                   <span
+                    key={index}
                     onClick={() => handlePaginate(item)}
                     className={
                       currentPage === item ? "pagi-item active" : "pagi-item"
@@ -160,17 +161,28 @@ const RegionInfoPage = () => {
                 );
               })}
             </div>
-
-            <Button style={{marginLeft:"30px"}} variant="outline-warning" onClick={() => setShow(true)}>
-              Add Animal
-            </Button>
-            <CreateAnimalModal show={show} onClose={setShow} setShow1={setshowToasty} setShow2={setShowToasty2} />
+            {(+workersRegion === Id || Role === Roles.Administrator) && (
+              <Button
+                style={{ marginLeft: "30px" }}
+                variant="outline-warning"
+                onClick={() => setShow(true)}
+              >
+                Add Animal
+              </Button>
+            )}
+            <CreateAnimalModal
+              regionId={Id}
+              show={show}
+              onClose={setShow}
+              setShow1={setshowToasty}
+              setShow2={setShowToasty2}
+            />
             {Region.animals !== undefined && (
-              <ListOfAnimals Animals={Region.animals} />
+              <ListOfAnimals setRegion={setRegion} regionId={Id} />
             )}
           </div>
 
-          <p className="text-center text-white ">
+          <p className="text-center text-white  ">
             Region is divivded in special feeding grounds where we take care of
             our animals. If you want to take a look into our feeding grounds you
             can follow the link.
@@ -181,7 +193,6 @@ const RegionInfoPage = () => {
             </Link>
           </div>
         </div>
-
       </div>
     );
   else
