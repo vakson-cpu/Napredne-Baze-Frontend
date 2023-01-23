@@ -156,9 +156,9 @@ const CreatePlant = () => {
                 </div>
                 <div className="row mt-2">
                   <label>Regions</label>
-                  {regions.map((item) => {
+                  {regions.map((item,index) => {
                     return (
-                      <div className="regions-box">
+                      <div key={index} className="regions-box">
                         <label className="label-checkbox">{item.name}</label>
                         <input
                           type="checkbox"
