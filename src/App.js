@@ -10,11 +10,10 @@ import CreatePlant from "./Components/Plants/CreatePlantsForm/CreatePlant";
 import { Roles } from "./Enums/RoleEnum";
 
 import { GetRegions } from "./Redux/RegionSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import RegionInfoPage from "./Pages/Regions/RegionInfo/RegionInfoPage";
 import FeedingGrounds from "./Pages/FeedingGrounds/FeedingGrounds";
 import AnimalsInFeedingGround from "./Pages/FeedingGrounds/AnimalsInFeedingGround";
-import CreateAnimalModal from "./Components/Animal/CreateAnimalModal";
 import { signIn } from "./Redux/AuthSlice";
 import NotFound from "./Pages/NotFound";
 import Plant from "./Pages/Plants/Plant";
@@ -22,6 +21,7 @@ import Animal from "./Pages/Animals/Animal";
 import Users from "./Pages/Admin/Users";
 import ManageWorkers from "./Pages/Admin/ManageWorkers";
 import ProtectedRoute from "./ProtectedRoute";
+import { GetWorkersInfo } from "./Redux/WorkerSlice";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -33,6 +33,10 @@ const App = () => {
     if (localStorage.length > 0) {
       let role = localStorage.getItem("Role");
       dispatch(signIn(role));
+    }
+    if (localStorage.getItem("Role") === Roles.Worker) {
+      let userId = localStorage.getItem("Id");
+      dispatch(GetWorkersInfo(userId));
     }
   }, []);
 
@@ -46,7 +50,7 @@ const App = () => {
         <Route
           path="Plants/Create"
           element={
-            <ProtectedRoute permission={Roles.Worker}>
+            <ProtectedRoute permission={[Roles.Worker,Roles.Administrator]}>
               <CreatePlant />
             </ProtectedRoute>
           }
@@ -64,7 +68,7 @@ const App = () => {
         <Route
           path="Users/GetAllUsers"
           element={
-            <ProtectedRoute permission={Roles.Administrator}>
+            <ProtectedRoute permission={[Roles.Administrator]}>
               <Users />
             </ProtectedRoute>
           }
@@ -72,7 +76,7 @@ const App = () => {
         <Route
           path="Users/ManageFeedingGrounds"
           element={
-            <ProtectedRoute permission={Roles.Administrator}>
+            <ProtectedRoute permission={[Roles.Administrator]}>
               <ManageWorkers />
             </ProtectedRoute>
           }
@@ -85,4 +89,3 @@ const App = () => {
 };
 
 export default App;
-
