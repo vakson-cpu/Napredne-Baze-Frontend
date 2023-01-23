@@ -32,9 +32,12 @@ export const UserService = {
       .then((res) => res.data)
       .catch((err) => err);
   },
-  MakeWorker: async (payload) => {
+  MakeWorker: async (payload,token) => {
     return axios
-      .post("Users/CreateWorker", payload)
+      .post("Users/CreateWorker", payload,{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }})
       .then((res) => res.data)
       .catch((err) => err);
   },
@@ -44,9 +47,12 @@ export const UserService = {
       .then((res) => res.data)
       .catch((err) => err);
   },
-  Downgrade: async (userId) => {
+  Downgrade: async (userId,token) => {
     return axios
-      .put(`Users/Downgrade/${userId}`)
+      .put(`Users/Downgrade/${userId}`,{},{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }})
       .then((res) => res.data)
       .catch((err) => err);
   },
