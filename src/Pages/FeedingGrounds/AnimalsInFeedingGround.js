@@ -7,8 +7,9 @@ import AnimalsSeenChart from "./AnimalsSeenChart";
 import "./AnimalsInFeedingGrounds.css";
 import FormForAnimals from "../../Components/FeedingGrounds/FormForAnimals";
 import AnimalService from "../../Services/AnimalService";
-import { Form,Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import axios from "axios";
+import { useSelector } from "react-redux";
 const AnimalsInFeedingGround = () => {
   const id = useParams().id;
   const regionId = +useParams().regionId;
@@ -17,12 +18,13 @@ const AnimalsInFeedingGround = () => {
   const [dataSet, setDataset] = useState([]);
   const [currentYear, setCurrentYear] = useState("2007-01-01");
   const [endDate, setEndDate] = useState("2008-12-30");
-  const [filterDate, setFilterDate] = useState("")
-  const [filterDate2, setFilterDate2] = useState("")
+  const [filterDate, setFilterDate] = useState("");
+  const [filterDate2, setFilterDate2] = useState("");
   const [Years, setYears] = useState([]);
-  const [errorFlags, setErrorFlags] = useState({error:false,message:""})
-
+  const [errorFlags, setErrorFlags] = useState({ error: false, message: "" });
+  const fgConstraint = useSelector((state) => state.WorkerSlice.feedingGroundsIds);
   const fetchFeedingGround = async (id) => {
+    console.log(fgConstraint)
     let result = await AnimalService.GetAnimalsByFgId(id, "", "");
     setAnimals(result.data);
 
@@ -67,16 +69,26 @@ const AnimalsInFeedingGround = () => {
     handleEndDate(item);
   };
 
-  const handleFilter = async()=>{
-    setErrorFlags({error:false,message:"One of the flags must not be empty"})
+  const handleFilter = async () => {
+    setErrorFlags({
+      error: false,
+      message: "One of the flags must not be empty",
+    });
 
-    if(filterDate==="" && filterDate2===""){
-      setErrorFlags({error:true,message:"One of the flags must not be empty"})
-      return
+    if (filterDate === "" && filterDate2 === "") {
+      setErrorFlags({
+        error: true,
+        message: "One of the flags must not be empty",
+      });
+      return;
     }
-    let result = await AnimalService.GetAnimalsByFgId(id,filterDate,filterDate2);
+    let result = await AnimalService.GetAnimalsByFgId(
+      id,
+      filterDate,
+      filterDate2
+    );
     setAnimals(result.data);
-  }
+  };
 
   console.log(dataSet);
   if (Loading === false)
@@ -88,21 +100,40 @@ const AnimalsInFeedingGround = () => {
         </h1>
         <div className="w-75 m-auto ">
           <div className="bg-dark p-3 text-center">
-            <h3 className='text-center text-white'>Filter Animals by date</h3>
-            <Form className='d-flex flex-row justify-content-center flex-wrap text-center'>
-              <div style={{width:"200px"}}>
+            <h3 className="text-center text-white">Filter Animals by date</h3>
+            <Form className="d-flex flex-row justify-content-center flex-wrap text-center">
+              <div style={{ width: "200px" }}>
                 <label className="text-center">Start date: </label>
-                <Form.Control type="date" value={filterDate} onChange={e=>setFilterDate(e.target.value)} placeholder="pick a date" />
+                <Form.Control
+                  type="date"
+                  value={filterDate}
+                  onChange={(e) => setFilterDate(e.target.value)}
+                  placeholder="pick a date"
+                />
               </div>
-              <div style={{width:"200px",marginLeft:"30px"}}>
+              <div style={{ width: "200px", marginLeft: "30px" }}>
                 <label className="text-center">End date: </label>
-                <Form.Control type="date" value={filterDate2} onChange={e=>setFilterDate2(e.target.value)} placeholder="pick a date" />
+                <Form.Control
+                  type="date"
+                  value={filterDate2}
+                  onChange={(e) => setFilterDate2(e.target.value)}
+                  placeholder="pick a date"
+                />
               </div>
             </Form>
-            <Button onClick={handleFilter} className='text-center mt-3' variant='outline-light'>Filter</Button>
+            <Button
+              onClick={handleFilter}
+              className="text-center mt-3"
+              variant="outline-light"
+            >
+              Filter
+            </Button>
             <br></br>
-            {errorFlags.error===true && <span className='mt-2 text-danger text-center'>{errorFlags.message}</span>}
-
+            {errorFlags.error === true && (
+              <span className="mt-2 text-danger text-center">
+                {errorFlags.message}
+              </span>
+            )}
           </div>
           <AnimalTable Animals={Animals} />
         </div>
@@ -114,7 +145,11 @@ const AnimalsInFeedingGround = () => {
             <label className="ml-5">Pick a time frame: </label>
             <select className="custom-select m-4 mb-0 ">
               {Years.map((item) => (
-                <option key={item} onClick={() => handleChange(item)} value={item}>
+                <option
+                  key={item}
+                  onClick={() => handleChange(item)}
+                  value={item}
+                >
                   {item}
                 </option>
               ))}
@@ -134,18 +169,21 @@ const AnimalsInFeedingGround = () => {
         ) : (
           <></>
         )}
-        <div>
-          <h1 className="text-center text-white">Manage Animals in Feeding </h1>
-          <div className="formDesign">
-            <FormForAnimals
-            
-              setAnimal={setAnimals}
-              Animals={Animals}
-              fgid={id}
-              regionId={regionId}
-            />
+        {fgConstraint.includes(+id) && (
+          <div>
+            <h1 className="text-center text-white">
+              Manage Animals in Feeding{" "}
+            </h1>
+            <div className="formDesign">
+              <FormForAnimals
+                setAnimal={setAnimals}
+                Animals={Animals}
+                fgid={id}
+                regionId={regionId}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   else
