@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, Row, Spinner } from "react-bootstrap";
 import { AnimalService } from "../../Services/AnimalService";
 import { GetRegions } from "../../Redux/RegionSlice";
+import { STATUS } from "../../Enums/StatusEnum";
 export default function CreateAnimalModal({
   show,
   onClose,
   setShow1,
   setShow2,
+  regionId,
+  setRegion,
 }) {
   const ImageRef = useRef();
   const [file, setFile] = useState("");
@@ -19,22 +22,9 @@ export default function CreateAnimalModal({
   const [LatinName, setLatinName] = useState("");
   const [Villages, setVillages] = useState("");
   const [isLoading, setIsLoadng] = useState(false);
-  // const [regions, setRegions] = useState([]);
   const [errorFlags, setErrorFlags] = useState({ error: false, message: "" });
-  const regions = useSelector((state) => state.RegionSlice.regions);
 
   const dispatch = useDispatch();
-
-  const [checkList, setCheckList] = useState([]);
-
-  const handleChecked = (e) => {
-    let helpArray = checkList.filter((item) => item === e.target.value);
-    if (helpArray.length === 0) setCheckList([...checkList, e.target.value]);
-    else {
-      helpArray = checkList.filter((item) => item !== e.target.value);
-      setCheckList([...helpArray]);
-    }
-  };
 
   useEffect(() => {
     if (!file) return;
@@ -55,20 +45,20 @@ export default function CreateAnimalModal({
     if (
       LatinName === "" ||
       LocalName === "" ||
-      checkList.length === 0 ||
       file === "" ||
       Villages === ""
     ) {
       setErrorFlags({ error: true, message: "All fields must be filled" });
       return;
     }
+    let regions = [regionId];
     let response = await AnimalService.InsertAnimal(
       {
         LatinName: LatinName,
         LocalName: LocalName,
         Villages: Villages,
         file: file,
-        Regions: checkList,
+        Regions: regions,
       },
       token
     );
@@ -88,7 +78,7 @@ export default function CreateAnimalModal({
       onClose(false);
     }
   };
-
+  
   return (
     <div>
       <Modal
@@ -148,7 +138,7 @@ export default function CreateAnimalModal({
                 />
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col className="mt-5  text-center m-auto ">
                 <label className="text-white fs-5">Pick a Region</label>
                 {regions.map((item) => {
@@ -164,7 +154,7 @@ export default function CreateAnimalModal({
                   );
                 })}
               </Col>
-            </Row>
+            </Row> */}
             <div className="mt-4 d-flex flex-row m-auto ">
               <Button
                 onClick={() => handlePickImage()}
