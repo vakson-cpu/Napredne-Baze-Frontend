@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import "./ConfigureUserModal.css";
 import { RegionService } from "../../Services/RegionService";
 const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
-  console.log("ovo prima ", roleId);
   const WORKER = 2;
   const USER = 3;
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +16,6 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
     succeeded: false,
     message: "",
   });
-  console.log("selected:", selectedRegion);
   const [UserInfo, setUserInfo] = useState({
     role: roleId,
     name: roleId === 2 ? "Worker" : "User",
@@ -30,14 +28,15 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
   const [Salary, setSalary] = useState("");
 
   const handleSubmit = async () => {
+    let token= localStorage.getItem('token');
     if (UserInfo.role === WORKER) {
       try {
-        //Case if its an update
         if (roleId === UserInfo.role) {
           let result = await RegionService.UpdateWorker(
             userId,
             selectedRegion,
-            Salary
+            Salary,
+            token
           );
           if (result.succeeded) {
             let users = await UserService.GetAllUsers();
@@ -64,7 +63,7 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
             userId,
             Salary,
             regionId: selectedRegion,
-          });
+          },token);
           if (result.succeeded) {
             let users = await UserService.GetAllUsers();
             setUsers(users.data);
@@ -94,7 +93,7 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
     } else {
       try {
         //Downgrade user to worker
-        let result = await UserService.Downgrade(userId);
+        let result = await UserService.Downgrade(userId,token);
         if (result.succeeded) {
           let users = await UserService.GetAllUsers();
           setUsers(users.data);
@@ -124,18 +123,11 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
   };
   const handleFetchInfo = async () => {
     let result = await UserService.GetWorkersInfo(userId);
-    console.log("stiglo je :", result);
     setSalary(result.data.salary);
-    console.log("RID<", result.data.regionId);
     setSelectedRegion(result.data.regionId);
   };
 
   useEffect(() => {
-    console.log("pozvano je");
-    // if (first && roleId!=="") {
-    //   if (roleId === WORKER) handleFetchInfo(userId);
-    //   setFirst(false);
-    // } else if (UserInfo.role === WORKER) handleFetchInfo(userId);
     if (roleId === WORKER) handleFetchInfo(userId);
     setUserInfo({
       role: roleId || 1,
@@ -147,12 +139,11 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
     if (value === "Worker") setUserInfo({ role: WORKER, name: "Worker" });
     else setUserInfo({ role: USER, name: "User" });
   };
-  const handleChecked = (item) => {
-    console.log("this is", selectedRegion);
-    console.log("compared to this", item.id);
-    if (selectedRegion === item.id) return true;
-    return false;
-  };
+  // const handleChecked = (item) => {
+
+  //   if (selectedRegion === item.id) return true;
+  //   return false;
+  // };
   if (RequestResponse.completed === false)
     return (
       <div>
