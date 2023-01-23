@@ -16,7 +16,6 @@ const FeedingGroundsTable = () => {
     const fetchFeedingGrounds = async () => {
       let result = await FeedingGroundsService.GetAllFeedingGrounds();
       setFeedingGrounds(result.data);
-      console.log(result);
       setLoading(false);
     };
     fetchFeedingGrounds();
@@ -30,19 +29,19 @@ const FeedingGroundsTable = () => {
     );
     setFgInfo({ fgid: fgid, regionId: regionId });
     setWorkers(result.data);
-    console.log(result.data);
     if (result.data.workers.length === 0)
       setLoadWorkers({ Loading: false, isEmpty: true, firstTime: false });
     else setLoadWorkers({ Loading: false, isEmpty: false, firstTime: false });
   };
   const addUserToFeedingGround = async (feedingGroundId, workerId) => {
+    let token = localStorage.getItem('token');
     setLoadWorkers(true);
     let niz = [workerId];
-    let dodavanje = await FeedingGroundsService.AddWorkerToFg(
+     await FeedingGroundsService.AddWorkerToFg(
       niz,
-      feedingGroundId
+      feedingGroundId,
+      token
     );
-    console.log(dodavanje);
     let result = await FeedingGroundsService.GetWorkersAndOptions(
       fgInfo.fgid,
       fgInfo.regionId
@@ -53,19 +52,19 @@ const FeedingGroundsTable = () => {
   };
 
   const removeWorker = async (userId, fgid) => {
+    let token = localStorage.getItem('token');
     setLoadWorkers(true);
-    await FeedingGroundsService.RemoveWorkersFromFg(userId, fgid);
+    await FeedingGroundsService.RemoveWorkersFromFg(userId, fgid,token);
     let result = await FeedingGroundsService.GetWorkersAndOptions(
       fgInfo.fgid,
       fgInfo.regionId
     );
-
     setWorkers(result.data);
     setLoadWorkers({Loading:false,isEmpty:false,firstTime:false});
   };
   if (Loading === false)
     return (
-      <div classNae='w-75 m-auto'>
+      <div className='w-75 m-auto'>
         <h3 className="text-black text-center fw-bold mt-3 mb-3">
           List of FeedingGrounds
         </h3>
@@ -80,8 +79,8 @@ const FeedingGroundsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {FeedingGrounds.map((item) => (
-              <tr className="text-center">
+            {FeedingGrounds.map((item,index) => (
+              <tr key={index} className="text-center">
                 <td>{item.fgNumber}</td>
                 <td>{item.startDate}</td>
                 <td>{item.endDate}</td>
@@ -115,7 +114,7 @@ const FeedingGroundsTable = () => {
                   </thead>
                   <tbody>
                     {Workers.workers.map((item, index) => (
-                      <tr className="text-center">
+                      <tr key={index} className="text-center">
                         <td className="text-center">{item.name}</td>
                         <td>{item.lastName}</td>
                         <td>
