@@ -68,8 +68,9 @@ const Animal = () => {
           </Button>
         </div>
         <div className="d-flex flex-row flex-wrap justify-content-center mt-5">
-          {List.map((item) => (
+          {List.map((item,index) => (
             <AnimalCard
+            key={index}
               LocalName={item.localName}
               title={item.latinName}
               img={item.image}
@@ -82,9 +83,9 @@ const Animal = () => {
           className="childWrapper d-flex d-row flex-wrap mt-2 mb-5"
           style={{ marginLeft: "150px" }}
         >
-          {PagginationArray.map((item) => {
+          {PagginationArray.map((item,index) => {
             return (
-              <Link className="pagi-Link" to={`/Animals/GetAll/${item}`}>
+              <Link key={index} className="pagi-Link" to={`/Animals/GetAll/${item}`}>
                 <span
                   className={
                     currentPage === item ? "pagi-item active" : "pagi-item"
