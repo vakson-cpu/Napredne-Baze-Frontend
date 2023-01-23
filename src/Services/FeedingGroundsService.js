@@ -42,14 +42,20 @@ export const FeedingGroundsService = {
       .then((res) => res.data)
       .catch((err) => err);
   },
-  AddWorkerToFg: async (workers, fgid) => {
+  AddWorkerToFg: async (workers, fgid,token) => {
     return axios
-      .put(`FeedingGrounds/AddWorkers/${fgid}`, { workers: workers })
+      .put(`FeedingGrounds/AddWorkers/${fgid}`, { workers: workers },{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }})
       .then((res) => res.data)
       .catch((err) => err);
   },
-  RemoveWorkersFromFg: async (userId, fgid) => {
-    return axios.delete(`FeedingGrounds/RemoveWorker/${fgid}?userId=${userId}`);
+  RemoveWorkersFromFg: async (userId, fgid,token) => {
+    return axios.delete(`FeedingGrounds/RemoveWorker/${fgid}?userId=${userId}`,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }});
   },
 };
 export default FeedingGroundsService;
