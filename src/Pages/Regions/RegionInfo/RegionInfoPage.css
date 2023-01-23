@@ -52,3 +52,8 @@ span.pagi-item{
     margin: 30px;
 }
 
+.paraBg{
+    background-color:rgb(0, 0, 0,0.5);
+    padding: 10px;
+    color: white;
+}
