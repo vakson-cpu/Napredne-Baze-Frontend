@@ -19,13 +19,13 @@ export const GetWorkersInfo = createAsyncThunk(
 );
 
 export const WorkerSlice = createSlice({
-  name: "RegionSlice",
+  name: "WorkerSlice",
   initialState,
   reducers: {
-    resetValues: {
-      regionId: 0,
-      status: STATUS.IDLE,
-      feedingGroundsIds: [],
+    resetValues: (state)=>{
+      state.regionId= 0;
+      state.status= STATUS.IDLE;
+      state.feedingGroundsIds= [];
     },
   },
   extraReducers: {
