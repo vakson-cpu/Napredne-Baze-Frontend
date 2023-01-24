@@ -71,7 +71,6 @@ const RegionInfoPage = () => {
     }
   }, [status, Regions]);
 
-  console.log(Regions);
   const handlePaginate = (item) => {
     setCurrentPage(item);
     let dummyAr = [];
@@ -83,7 +82,6 @@ const RegionInfoPage = () => {
         dummyAr.push(Region.plants[i].plant);
       }
     setToDisplayPlants(dummyAr);
-    console.log("tu displej", dummyAr);
   };
   if (STATUS.SUCCEDED === status)
     return (
@@ -129,7 +127,7 @@ const RegionInfoPage = () => {
             <h2 className="text-white text-center mt-5 mb-5 ">
               Plants in this region:{" "}
             </h2>
-            {Role === Roles.Worker && (
+            {(+workersRegion === Id || Role===Roles.Administrator) && (
               <Link to="/Plants/Create" className="alignButton">
                 <Button variant="outline-warning">Add Plant</Button>
               </Link>

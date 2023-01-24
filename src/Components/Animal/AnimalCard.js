@@ -7,7 +7,7 @@ const AnimalCard = ({title,LocalName,img,Villages}) => {
     <Card.Img
       variant="top"
       style={{width:"100%", height:"200px"}}
-      src={`https://localhost:5001/api/Plants/image/${img}`}
+      src={`http://vakson-001-site1.atempurl.com/api/Plants/image/${img}`}
     />
     <Card.Body>
       <Card.Title>{title}</Card.Title>
