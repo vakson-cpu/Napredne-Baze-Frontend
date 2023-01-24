@@ -37,7 +37,7 @@ const RegionInfoPage = () => {
         if (item.plant.protectionId === 1) count1++;
         if (item.plant.protectionId === 2) count2++;
         if (item.plant.protectionId === 3) count3++;
-        return;
+        return 1;
       });
       let dataset = [
         {
@@ -69,6 +69,7 @@ const RegionInfoPage = () => {
 
       setPagginationArray(DummyArray);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, Regions]);
 
   const handlePaginate = (item) => {

@@ -10,7 +10,6 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
   const [suggestions, setSuggestions] = useState("");
   const [allAnimals, setAllAnimals] = useState([]);
   const [error, setErrorFlags] = useState({ flag: false, text: "" });
-  const [succes, setSucces] = useState(false);
   const onTextChange = (tekst) => {
     let matches = [];
     setLatinName(tekst);
@@ -34,6 +33,7 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
       }
     };
     fetchAnimals();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSuggestionChange = (val) => {
@@ -86,7 +86,7 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
           text: "The Animal doesnt exist",
         });
       }
-      let result = await FeedingGroundsService.AddAnimalToFeedingGrounds(
+       await FeedingGroundsService.AddAnimalToFeedingGrounds(
         animalToAdd[0].id,
         fgid,
         date

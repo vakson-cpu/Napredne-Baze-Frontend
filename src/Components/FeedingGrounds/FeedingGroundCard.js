@@ -16,6 +16,7 @@ const FeedingGroundCard = ({Id,startDate,endDate,fgnumber,animals,regionId}) => 
         let date =dateFormat(new Date());
         if(date>startDate && date<endDate)
             setIsActive({label:"Active",color:"success"});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
   return (

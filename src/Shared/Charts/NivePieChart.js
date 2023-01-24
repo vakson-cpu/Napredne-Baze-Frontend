@@ -1,5 +1,4 @@
 import { ResponsivePie } from '@nivo/pie'
-import { Protections } from '../../Enums/ProtectionsEnum'
 
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and

@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { UserService } from "../Services/UserService";
 import { STATUS } from "../Enums/StatusEnum";
 import { RegionService } from "../Services/RegionService";
 const initialState = {

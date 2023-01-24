@@ -2,11 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./ListOfAnimals.css";
-import { useDispatch, useSelector } from "react-redux";
-import { Col, Row, Spinner } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { Col, Row } from "react-bootstrap";
 import { AnimalService } from "../../Services/AnimalService";
 import { GetRegions } from "../../Redux/RegionSlice";
-import { STATUS } from "../../Enums/StatusEnum";
 export default function CreateAnimalModal({
   show,
   onClose,

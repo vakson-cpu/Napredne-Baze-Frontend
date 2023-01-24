@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Card from "react-bootstrap/Card";
 import forest from "../../.././Assets/Forest1.jpeg";
 import { RegionService } from "../../../Services/RegionService";
 import RegionCard from '../../../Components/Regions/RegionCard/RegionCard'

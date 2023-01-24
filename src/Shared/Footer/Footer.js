@@ -8,12 +8,7 @@ import {
   faSnapchat,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
-import {
-  solid,
-  regular,
-  brands,
-  icon,
-} from "@fortawesome/fontawesome-svg-core/import.macro"; // <-- import styles to be used
+
 const Footer = () => {
   return (
     <footer>

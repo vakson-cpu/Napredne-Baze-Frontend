@@ -1,6 +1,5 @@
 import React from "react";
-import { Tooltip } from "react-bootstrap";
-import { Calendar, ResponsiveCalendar } from "@nivo/calendar";
+import {  ResponsiveCalendar } from "@nivo/calendar";
 import './AnimalsInFeedingGrounds.css'
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
@@ -8,9 +7,7 @@ import './AnimalsInFeedingGrounds.css'
 // website examples showcase many properties,
 // you'll often use just a few of them.
 const AnimalsSeenChart = ({ data /* see data tab */, startDate, endDate }) => {
-  console.log("pristigli data", data);
-  console.log("START DATE", startDate);
-  console.log("END DATE : ", endDate);
+
   return (
     <ResponsiveCalendar
       // className="w-100 h-100 index"

@@ -1,7 +1,6 @@
-import React,{useEffect} from "react";
+import React from "react";
 import Card from "react-bootstrap/Card";
 import regionBg from "../../.././Assets/RegionCardBg.jpeg";
-import { RegionService } from "../../../Services/RegionService";
 import {Button} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import './RegionCard.css'

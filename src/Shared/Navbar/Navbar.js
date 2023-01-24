@@ -6,7 +6,6 @@ import LoginModal from "../Modals/LoginModal";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../Redux/AuthSlice";
-import { NavDropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [openNavbar, setOpenNavbar] = useState(false);

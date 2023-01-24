@@ -33,6 +33,7 @@ const Plant = () => {
   };
   useEffect(() => {
     getAll(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   // const handlePaginate = (item) => {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Card, Badge } from "react-bootstrap";
 import "./ListOfAnimals.css";
 import { useSelector } from "react-redux";
 import AnimalCard from "./AnimalCard";
@@ -18,6 +17,7 @@ const ListOfAnimals = ({ regionId }) => {
       DummyArray.push(i);
     }
     setPagginationArray(DummyArray);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   useEffect(() => {
@@ -34,6 +34,7 @@ const ListOfAnimals = ({ regionId }) => {
     else for (let i = 0; i < 8; i++) animalDummz.push(animals[i].animal);
 
     setList(animalDummz);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   const handlePaginate = (item) => {
@@ -49,7 +50,6 @@ const ListOfAnimals = ({ regionId }) => {
         dummyAr.push(animals[i].animal);
       }
     setList(dummyAr);
-    console.log("tu displej", dummyAr);
   };
   if (status === STATUS.SUCCEDED)
     return (

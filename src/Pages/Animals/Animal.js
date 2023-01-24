@@ -43,6 +43,7 @@ const Animal = () => {
   };
   useEffect(() => {
     fetchAnimals(page, sortBy, sortValue);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
   if (Loading === false)
     return (

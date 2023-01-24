@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
-import FeedingGroundsService from "../../Services/FeedingGroundsService";
 import { useParams } from "react-router-dom";
 import AnimalTable from "../../Components/FeedingGrounds/AnimalTable";
 import AnimalsSeenChart from "./AnimalsSeenChart";
@@ -8,7 +7,6 @@ import "./AnimalsInFeedingGrounds.css";
 import FormForAnimals from "../../Components/FeedingGrounds/FormForAnimals";
 import AnimalService from "../../Services/AnimalService";
 import { Form, Button } from "react-bootstrap";
-import axios from "axios";
 import { useSelector } from "react-redux";
 const AnimalsInFeedingGround = () => {
   const id = useParams().id;
@@ -32,6 +30,7 @@ const AnimalsInFeedingGround = () => {
   };
   useEffect(() => {
     fetchFeedingGround(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

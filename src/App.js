@@ -4,7 +4,6 @@ import Info from "./Pages/InfoPage/Info";
 import Region from "./Pages/Regions/RegionPage/Region";
 import Footer from "./Shared/Footer/Footer";
 import Navbar from "./Shared/Navbar/Navbar";
-import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import CreatePlant from "./Components/Plants/CreatePlantsForm/CreatePlant";
 import { Roles } from "./Enums/RoleEnum";
@@ -38,6 +37,7 @@ const App = () => {
       let userId = localStorage.getItem("Id");
       dispatch(GetWorkersInfo(userId));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

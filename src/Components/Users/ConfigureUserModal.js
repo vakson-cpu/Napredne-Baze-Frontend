@@ -7,7 +7,9 @@ import { RegionService } from "../../Services/RegionService";
 const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
   const WORKER = 2;
   const USER = 3;
+  // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [first, setFirst] = useState(true);
   const Regions = useSelector((state) => state.RegionSlice.regions);
   const [selectedRegion, setSelectedRegion] = useState(1);
@@ -133,6 +135,7 @@ const ConfigureUserModal = ({ show, onClose, userId, roleId, setUsers }) => {
       role: roleId || 1,
       ...(roleId === 2 ? { name: "Worker" } : { name: "User" }),
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
   const handleSelectChange = (value) => {

@@ -10,7 +10,6 @@ const FeedingGrounds = () => {
   const [FeedingGrounds, setFeedingGrounds] = useState([]);
   const [Loading, setLoading] = useState(true);
   const page = parseInt(useParams().pageNumber);
-  const [currentPage, setCurrentPage] = useState(page || 1);
   useEffect(() => {
     async function getRegion() {
       setLoading(true);
@@ -19,6 +18,7 @@ const FeedingGrounds = () => {
       setLoading(false);
     }
     getRegion();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log(FeedingGrounds);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Badge } from "react-bootstrap";
+import { Card, Badge } from "react-bootstrap";
 import { Protections } from "../../../Enums/ProtectionsEnum";
 const PlantCard = ({ title, LocalName, Rarity, img }) => {
   var obj = { rarity: "", label: "" };

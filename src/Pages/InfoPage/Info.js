@@ -7,7 +7,6 @@ import Animal3 from "../../Assets/Animal3.jpeg";
 import Plant1 from "../../Assets/Plant1.jpeg";
 import Plant2 from "../../Assets/Plant2.jpeg";
 import Plant3 from "../../Assets/Plant3.jpeg";
-import GolijaBg from "../../Assets/GoogleMapaGolija.jpg";
 import Turizam from "../../Assets/Turizam.jpg";
 const Info = () => {
   return (

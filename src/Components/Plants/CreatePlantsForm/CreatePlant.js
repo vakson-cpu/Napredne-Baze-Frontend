@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { STATUS } from "../../../Enums/StatusEnum";
-import { Alert, Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import "./CreatePlant.css";
 import { PlantSrevice } from "../../../Services/PlantService";
 import { GetRegions } from "../../../Redux/RegionSlice";

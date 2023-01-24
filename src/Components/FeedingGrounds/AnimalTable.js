@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Spinner } from "react-bootstrap";
+import React from "react";
 
 import Table from "react-bootstrap/Table";
 const AnimalTable = ({ Animals }) => {
