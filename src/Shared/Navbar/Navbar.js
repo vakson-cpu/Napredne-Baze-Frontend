@@ -7,6 +7,7 @@ import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../Redux/AuthSlice";
 import { useNavigate } from "react-router-dom";
+import { resetValues } from "../../Redux/WorkerSlice";
 const Navbar = () => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -19,6 +20,7 @@ const Navbar = () => {
     if (!IsLogged) setShowModal(!showModal);
     else {
       dispatch(signOut());
+      dispatch(resetValues());
       navigate("/");
     }
   };

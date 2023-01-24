@@ -3,18 +3,17 @@ import { UserService } from "../Services/UserService";
 import { STATUS } from "../Enums/StatusEnum";
 
 const initialState = {
-regionId:0,
-status:STATUS.IDLE,
-feedingGroundsIds:[]
-
+  regionId: 0,
+  status: STATUS.IDLE,
+  feedingGroundsIds: [],
 };
 export const GetWorkersInfo = createAsyncThunk(
   "Worker/GetInfo",
   async (userId) => {
     try {
-      return await UserService.GetWorkersInfo(userId)
+      return await UserService.GetWorkersInfo(userId);
     } catch (error) {
-      return "ERROR"
+      return "ERROR";
     }
   }
 );
@@ -22,7 +21,13 @@ export const GetWorkersInfo = createAsyncThunk(
 export const WorkerSlice = createSlice({
   name: "RegionSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    resetValues: {
+      regionId: 0,
+      status: STATUS.IDLE,
+      feedingGroundsIds: [],
+    },
+  },
   extraReducers: {
     [GetWorkersInfo.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
@@ -31,13 +36,14 @@ export const WorkerSlice = createSlice({
       state.status = STATUS.PENDING;
     },
     [GetWorkersInfo.fulfilled]: (state, action) => {
-      console.log("payloadddd",action)
-      state.status=STATUS.SUCCEDED;
-      state.regionId=action.payload.data.regionId;
-      state.feedingGroundsIds=action.payload.data.feedingGrounds;
+      console.log("payloadddd", action);
+      state.status = STATUS.SUCCEDED;
+      state.regionId = action.payload.data.regionId;
+      state.feedingGroundsIds = action.payload.data.feedingGrounds;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
+export const {resetValues} = WorkerSlice.actions;
 export default WorkerSlice.reducer;
