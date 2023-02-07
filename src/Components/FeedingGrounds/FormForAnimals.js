@@ -86,10 +86,12 @@ function FormForAnimals({ Animals, regionId, fgid, setAnimal }) {
           text: "The Animal doesnt exist",
         });
       }
+      let token = localStorage.getItem('token');
        await FeedingGroundsService.AddAnimalToFeedingGrounds(
         animalToAdd[0].id,
         fgid,
-        date
+        date,
+        token
       );
       let newAnimals = await FeedingGroundsService.GetFeedingGroundById(fgid);
       console.log(newAnimals);

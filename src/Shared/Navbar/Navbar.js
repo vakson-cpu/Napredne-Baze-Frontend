@@ -85,6 +85,11 @@ const Navbar = () => {
               <p>Users</p>
             </Link>
           )}
+          {role === "Administrator" && (
+              <Link to={"Users/ManageFeedingGrounds"}>
+                <p>Manage</p>
+              </Link>
+            )}
           <button className="custom-button" onClick={handleLogin}>
             {IsLogged ? "Log-Out" : "Log-in"}
           </button>

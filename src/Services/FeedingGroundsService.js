@@ -14,13 +14,16 @@ export const FeedingGroundsService = {
       .get(`FeedingGrounds/Get/${id}`)
       .then((res) => res.data)
       .catch((err) => err),
-  AddAnimalToFeedingGrounds: async (animalId, feedingGroundId, firstSeen) => {
+  AddAnimalToFeedingGrounds: async (animalId, feedingGroundId, firstSeen,token) => {
     await axios
       .put("FeedingGrounds/AddAnimal", {
         animalId: animalId,
         feedingGroundId: feedingGroundId,
         firstSeen: firstSeen,
-      })
+      },{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }})
       .then((res) => res.data)
       .catch((err) => err);
   },
